@@ -39,7 +39,7 @@
         "sqlite3": "^5.0.2",
         "string-pixel-width": "^1.10.0",
         "strip-ansi": "^6.0.0",
-        "twemoji-parser": "^13.0.0",
+        "twemoji-parser": "^13.1.0",
         "winston": "^3.3.3",
         "winston-daily-rotate-file": "^4.5.0",
         "yaml": "^1.10.0"
