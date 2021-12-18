@@ -95,7 +95,7 @@ export default class Ban extends SlashCommand {
         //await user.ban({ reason });
 
         let modLogs = new ModLog(interaction!.guild!.id)
-        modLogs.create({ type: 'BAN', targetID: user.id, staffID: interaction.user.id, reason: reason })
+        await modLogs.create({ type: 'BAN', targetID: user.id, staffID: interaction.user.id, reason: reason })
 		
 		return interaction.reply(
 			this.client.functions.generateSuccessMessage(
