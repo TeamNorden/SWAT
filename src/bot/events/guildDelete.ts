@@ -1,5 +1,7 @@
+import { Passthrough } from "@typegoose/typegoose";
 import { Guild } from "discord.js";
 import EventHandler from "../../../lib/classes/EventHandler";
+import GuildSchema from '../../../lib/models/Guild';
 
 export default class GuildDelete extends EventHandler {
 	override async run(guild: Guild) {
@@ -8,6 +10,12 @@ export default class GuildDelete extends EventHandler {
 				(await this.client.fetchStats()).guilds
 			} guilds(s)!`
 		);
+
+		const existsGuild = await GuildSchema.findOneAndDelete({ id: guild.id });
+		if (!existsGuild) {
+			return;
+		}
+
 		return this.client.logger.webhookLog("guild", {
 			content: `**__Left a Guild (${
 				(await this.client.fetchStats()).guilds

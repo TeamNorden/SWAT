@@ -11,7 +11,7 @@ export class BaseGuildSchema {
     public id?: string
 
     @prop()
-    public blacklisted?: boolean // nice
+    public blacklisted?: boolean
 
     @prop()
     public premium?: boolean
@@ -39,5 +39,3 @@ export class BaseGuildSchema {
 const GuildModel = getModelForClass(BaseGuildSchema)
 
 export default GuildModel
-
-// helo
