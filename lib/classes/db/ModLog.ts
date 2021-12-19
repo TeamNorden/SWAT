@@ -14,7 +14,7 @@ class ModLog {
     }
 
     public async getLastCase(targetID: Snowflake) {
-        let targetCases: DocumentType<BaseModLogInfraction>[] | null = await ModLogInfractionModel.find({targetID: targetID})
+        let targetCases: DocumentType<BaseModLogInfraction>[] | null = (await ModLogInfractionModel.find({targetID: targetID}))?.filter(doc => (doc._id.split(-))[0] === this.guildId))
 
         if (!targetCases || !targetCases.length) return 0
 
@@ -24,7 +24,7 @@ class ModLog {
     }
 
     public async get(caseID: ModLogID) {
-        let data: DocumentType<BaseModLogInfraction> | null = (await ModLogInfractionModel.findOne({ _id: caseID }))?.filter(doc => (doc._id.split(-))[0] === this.guildId)
+        let data: DocumentType<BaseModLogInfraction> | null = await ModLogInfractionModel.findOne({ _id: caseID })
 
         return data
     }
