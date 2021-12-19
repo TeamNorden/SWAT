@@ -14,7 +14,7 @@ class ModLog {
     }
 
     public async getLastCase(targetID: Snowflake) {
-        let targetCases: DocumentType<BaseModLogInfraction>[] | null = (await ModLogInfractionModel.find({targetID: targetID}))?.filter(doc => (doc._id.split(-))[0] === this.guildId))
+        let targetCases: DocumentType<BaseModLogInfraction>[] | null = (await ModLogInfractionModel.find({targetID: targetID}))?.filter(doc => (doc._id.split(-))[0] === this.guildId)
 
         if (!targetCases || !targetCases.length) return 0
 
@@ -41,7 +41,7 @@ class ModLog {
     }
 
     public async delete(caseID: ModLogID) {
-        return ModLogInfractionModel.deleteOne({_id: caseID})
+        return ModLogInfractionModel.deleteOne({_id: caseID}).catch(() => null)
     }
 }
 
