@@ -24,7 +24,7 @@ class ModLog {
     }
 
     public async get(caseID: ModLogID) {
-        let data: DocumentType<BaseModLogInfraction> | null = await ModLogInfractionModel.findOne({ _id: caseID })
+        let data: DocumentType<BaseModLogInfraction> | null = (await ModLogInfractionModel.findOne({ _id: caseID }))?.filter(doc => (doc._id.split(-))[0] === this.guildId)
 
         return data
     }
