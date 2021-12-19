@@ -11,7 +11,7 @@ export default class TextCommand {
 	private readonly devOnly: boolean;
 	private readonly guildOnly: boolean;
 	private readonly ownerOnly: boolean;
-	private readonly client: BetterClient;
+	public readonly client: BetterClient;
 	constructor(name: string, client: BetterClient, options: TextCommandOptions) {
 		this.name = name;
 		this.description = "";

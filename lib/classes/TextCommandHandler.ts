@@ -35,11 +35,17 @@ export default class TextCommandHandler {
 
 	public async handleCommand(message: Message) {
 		if (
-			!message.content.startsWith(`<@${this.client.user?.id}>`) &&
-			!message.content.startsWith(`<!@${this.client.user?.id}>`)
+			!message.content.startsWith(`swat.dev `)
 		)
 			return;
-		const args = message.content.slice(23).trim().split(/ +/g);
+		if (message!.guild!.id !== "854739172580655134") {
+			return message.reply(
+				this.client.functions.generateErrorMessage({
+					title: "Command Error",
+					description: "This command is only available in the development server.",
+				}));
+		}
+		const args = message.content.slice(9).trim().split(/ +/g);
 		const commandName = args.shift()?.toLowerCase();
 		const command = this.fetchCommand(commandName!);
 		if (!command) return;
