@@ -11,11 +11,6 @@ export default class GuildDelete extends EventHandler {
 			} guilds(s)!`
 		);
 
-		const existsGuild = await GuildSchema.findOneAndDelete({ id: guild.id });
-		if (!existsGuild) {
-			return;
-		}
-
 		return this.client.logger.webhookLog("guild", {
 			content: `**__Left a Guild (${
 				(await this.client.fetchStats()).guilds
