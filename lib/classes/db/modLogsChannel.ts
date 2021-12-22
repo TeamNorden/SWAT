@@ -22,7 +22,7 @@ export const setModLogs = async (guildId: Snowflake, modLogsID: Snowflake) => {
 }
 
 export const getModLogs = async (guildId: Snowflake) => {
-    const result = await GuildModel.findOne({ id: guildId})
+    const result = await GuildModel.findOne({ id: guildId })
 
     return result?.config?.modlogsChannel
 }

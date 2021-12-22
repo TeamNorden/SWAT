@@ -24,3 +24,5 @@ client
 		client.logger.error(error);
 		client.logger.sentry.captureException(error);
 	});
+
+export default client;
