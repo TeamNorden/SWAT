@@ -22,7 +22,7 @@ class ModLog {
 
         if (!targetCases || !targetCases.length) return 0
 
-        let lastCase: number = targetCases.map(modLogCase => modLogCase._id).sort((a: number, b: number) => b - a)[0]
+        let lastCase: number = targetCases.map(modLogCase => parseInt(modLogCase._id.split('-')[2])!).sort((a: number, b: number) => b - a)[0]!
 
         return lastCase
     }
