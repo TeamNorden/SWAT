@@ -38,7 +38,7 @@ export default class TextCommandHandler {
 			!message.content.startsWith(`swat.dev `)
 		)
 			return;
-		if (message!.guild!.id !== "854739172580655134") {
+		if(!["850054869980413983", "854739172580655134"].includes(message.guild!.id)) {
 			return message.reply(
 				this.client.functions.generateErrorMessage({
 					title: "Command Error",
