@@ -5,7 +5,7 @@ import { Snowflake } from 'discord.js'
 export type ModLogID = `${Snowflake}-${Snowflake}-${number}`
 
 // Type Of The Infraction created
-export type ModLogCaseType = 'BAN' | 'MUTE' | 'STRIKE' | 'KICK' | 'UNBAN' | 'UNMUTE' | 'UNSTRIKE' | 'TIMEOUT' | 'UNTIMEOUT'
+export type ModLogCaseType = 'BAN' | 'STRIKE' | 'KICK' | 'UNBAN' | 'UNSTRIKE' | 'TIMEOUT' | 'UNTIMEOUT'
 
 /* Just In Case:
 * BaseModLogInfraction is NOT gonna be used to init new ModLogs, use the ModLog class in the classes/db folder for that.

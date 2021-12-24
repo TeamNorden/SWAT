@@ -4,6 +4,13 @@ import { DocumentType } from '@typegoose/typegoose'
 import BetterClient from '../../extensions/BetterClient'
 import { getModLogs } from './modLogsChannel'
 import client from '../../../src/bot/bot'
+import { banEmbed } from '../embeds/modlogs/ban'
+import { strikeEmbed } from '../embeds/modlogs/strike'
+import { kickEmbed } from '../embeds/modlogs/kick'
+import { unbanEmbed } from '../embeds/modlogs/unban'
+import { unstrikeEmbed } from '../embeds/modlogs/unstrike'
+import { timeoutEmbed } from '../embeds/modlogs/timeout'
+import { untimeoutEmbed } from '../embeds/modlogs/untimeout'
 
 interface ModLogInfractionOptions extends  Omit<Required<BaseModLogInfraction>, 'reason' | '_id'>{
     reason?: string
@@ -44,42 +51,42 @@ class ModLog {
         const modlogChannelID = await getModLogs(this.guildId)
         const modlogChannel = this.client.channels.cache.get(modlogChannelID!) as TextChannel
 
-
-        if(modlogChannel) {
-            let embed = new MessageEmbed()
-            embed.setTitle(`Case ID: ${newCaseID}`)
-            embed.setColor(0x00FF00)
-            embed.setDescription(`**Type:** ${options.type}`)
-            embed.addField(`**Target:**`, `<@${options.targetID}>`)
-            embed.addField(`**Staff:**`, `<@${options.staffID}>`)
-            embed.addField(`**Reason:**`, `${options.reason}`)
-            embed.setTimestamp()
-
-            const viewCase = new MessageButton({
-                label: 'View Case',
-                style: 'LINK',
-                url: `https://logs.swat.codeize.me/case/${newCaseID}`
-            })
-            const deleteCase = new MessageButton({
-                label: 'Delete Case',
-                customId: 'deleteCase',
-                style: 'DANGER',
-                emoji: '❌'
-            })
-            const lookupTarget = new MessageButton({
-                label: 'Lookup Target',
-                customId: 'lookupTarget',
-                style: 'PRIMARY',
-                emoji: '🔍'
-            })
-            const adminPanel = new MessageActionRow().addComponents(
-                viewCase,
-                deleteCase,
-                lookupTarget
-            )
-            await modlogChannel.send({ embeds: [embed], components: [adminPanel] })
-        } else {
-            return
+        switch(options.type) {
+            case 'BAN':
+                await banEmbed(options.targetID, options.staffID, options.reason!, lastCase, newCaseID).then(async embed => {
+                    await modlogChannel.send(embed)
+                })
+                break
+            case 'STRIKE':
+                await strikeEmbed(options.targetID, options.staffID, options.reason!, lastCase, newCaseID).then(async embed => {
+                    await modlogChannel.send(embed)
+                })
+                break
+            case 'KICK':
+                await kickEmbed(options.targetID, options.staffID, options.reason!, lastCase, newCaseID).then(async embed => {
+                    await modlogChannel.send(embed)
+                })
+                break
+            case 'UNBAN':
+                await unbanEmbed(options.targetID, options.staffID, options.reason!, lastCase, newCaseID).then(async embed => {
+                    await modlogChannel.send(embed)
+                })
+                break
+            case 'UNSTRIKE':
+                await unstrikeEmbed(options.targetID, options.staffID, options.reason!, lastCase, newCaseID).then(async embed => {
+                    await modlogChannel.send(embed)
+                })
+                break
+            case 'TIMEOUT':
+                await timeoutEmbed(options.targetID, options.staffID, options.reason!, lastCase, newCaseID).then(async embed => {
+                    await modlogChannel.send(embed)
+                })
+                break
+            case 'UNTIMEOUT':
+                await untimeoutEmbed(options.targetID, options.staffID, options.reason!, lastCase, newCaseID).then(async embed => {
+                    await modlogChannel.send(embed)
+                })
+                break
         }
 
         return createdModLog as DocumentType<BaseModLogInfraction>

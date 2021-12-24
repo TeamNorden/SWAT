@@ -30,7 +30,7 @@ export default class Timeout extends SlashCommand {
                 {
                     name: "time",
                     type: "STRING",
-                    description: "The amount of time to time the user out for"
+                    description: "The amount of time to time the user out for. Defaults to 1 hour if a time value is not provided.",
                 },
 				{
 					name: "reason",
@@ -50,7 +50,7 @@ export default class Timeout extends SlashCommand {
 	override async run(interaction: CommandInteraction) {
 		const user = interaction.options.getUser("user") as unknown as GuildMember;
         const reason = interaction.options.getString("reason") ?? "No reason provided.";
-        const time = interaction.options.getString("time");
+        const time = interaction.options.getString("time") ?? "1h";
         const member = interaction.guild!.members.cache.get(user.id) as GuildMember;
 
         if (!member) {
