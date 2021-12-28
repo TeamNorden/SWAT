@@ -6,6 +6,15 @@ This is SWAT, a moderation and automoderation bot for Discord. Made for all type
 Version is currently **__0 Dev__**. This means that the core functionality of the bot is still largely untested and under developed, there's a high probability that the bot will break.
 To keep updated with the bot and it's development, join the [Support Server](#support).
 
+## Contributors
+@Codeize
+- [GitHub](https://github.com/Codeize)
+- [Twitter](https://twitter.com/Codeize)
+
+@FadTheChad
+- [GitHub](https://github.com/FadTheChad)
+- [Twitter](https://twitter.com/DankML_Pk)
+
 ## License
 At a high level, here's the cans and cannots of the TeamNorden x SWAT license.
 
