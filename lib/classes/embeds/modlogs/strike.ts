@@ -4,13 +4,13 @@ export const strikeEmbed = async (targetID: Snowflake, staffID: Snowflake, reaso
     const strikeEmbed = new MessageEmbed()
         .setColor('#ff0000')
         .setTitle('Punished')
-        .setDescription(`${targetID} was punished by ${staffID} for ${reason}`)
+        .setDescription(`<@!${targetID}> was punished by <@!${staffID}> for ${reason}`)
         .setTimestamp()
         .setFooter(`Case #${lastCase + 1}`)
     const viewCase_STRIKE = new MessageButton({
         label: 'View Case',
         style: 'LINK',
-        url: `https://logs.swat.wtf/case/${newCaseID}`
+        url: `https://logs.swat.norden.wtf/case/${newCaseID}`
     })
     const deleteCase_STRIKE = new MessageButton({
         label: 'Delete Case',

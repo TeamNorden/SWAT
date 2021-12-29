@@ -56,7 +56,7 @@ export default class GuildCreate extends EventHandler {
 				blacklisted: false,
 				premium: false,
 				config: {
-					language: "en-US",
+					language: "",
 					adminRole: "",
 					modRole: "",
 					helperRole: "",
@@ -64,11 +64,11 @@ export default class GuildCreate extends EventHandler {
 					modlogsChannel: "",
 				},
 				modules: {
-					antiraid: false,
-					antispam: false,
-					autorole: false,
-					blacklist: false,
-					watchdog: false,
+					antiraid: true,
+					antispam: true,
+					autorole: true,
+					blacklist: true,
+					watchdog: true,
 				}
 			});
 			await guildModel.save();

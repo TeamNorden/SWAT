@@ -4,13 +4,13 @@ export const kickEmbed = async (targetID: Snowflake, staffID: Snowflake, reason:
     const kickEmbed = new MessageEmbed()
         .setColor('#ff0000')
         .setTitle('Banned')
-        .setDescription(`${targetID} was kicked by ${staffID} for ${reason}`)
+        .setDescription(`<@!${targetID}> was kicked by <@!${staffID}> for ${reason}`)
         .setTimestamp()
         .setFooter(`Case #${lastCase + 1}`)
     const viewCase_KICK = new MessageButton({
         label: 'View Case',
         style: 'LINK',
-        url: `https://logs.swat.wtf/case/${newCaseID}`
+        url: `https://logs.swat.norden.wtf/case/${newCaseID}`
     })
     const deleteCase_KICK = new MessageButton({
         label: 'Delete Case',

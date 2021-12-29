@@ -47,11 +47,12 @@ export default class Ban extends SlashCommand {
 	}
 
 	override async run(interaction: CommandInteraction) {
-		const user = interaction.options.getUser("user") as unknown as GuildMember;
+		const user = interaction.options.getUser("user");
         const reason = interaction.options.getString("reason") ?? "No reason provided.";
         const messages = new Collection<Snowflake, Message<boolean>>();
         const channel = interaction.channel as GuildTextBasedChannel;
 		const purge = interaction.options.getBoolean("purge") ?? false;
+		const member = interaction.guild!.members.cache.get(user!.id) as GuildMember;
 
 		if (purge) {
 			for (const message of (
@@ -95,10 +96,11 @@ export default class Ban extends SlashCommand {
 		}
         
         
-        //await user.ban({ reason });
+        // ban the user
+		
 
         let modLogs = new ModLog(interaction!.guild!.id)
-        await modLogs.create({ type: 'BAN', targetID: user.id, staffID: interaction.user.id, reason: reason })
+        await modLogs.create({ type: 'BAN', targetID: member.id, staffID: interaction.user.id, reason: reason })
 		
 		return interaction.reply(
 			this.client.functions.generateSuccessMessage(

@@ -75,7 +75,7 @@ export default class Timeout extends SlashCommand {
 					description: `User ${member} was timed out for ${time}. Reason: ${reason}`,
 				},
 				[],
-				interaction.options.getBoolean("silent") || false
+				interaction.options.getBoolean("silent") ?? true
 			)
 		);
 	}

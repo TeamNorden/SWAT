@@ -60,7 +60,7 @@ export default class grantPremium extends TextCommand {
                     new MessageActionRow().addComponents(
                         new MessageButton({
                             label: "See the perks!",
-                            url: "https://swat.wtf/premium#perks",
+                            url: "https://swat.norden.wtf/premium#perks",
                             style: "LINK",
                         })
                     )

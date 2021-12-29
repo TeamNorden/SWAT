@@ -22,6 +22,11 @@ export default {
 		error: "ED4245"
 	},
 
+	roles: {
+		devRedacted: "924839405942874164",
+		devTeam: "922577892041429012",
+	},
+
 	intents: [
 		Intents.FLAGS.GUILDS,
 		Intents.FLAGS.GUILD_BANS,

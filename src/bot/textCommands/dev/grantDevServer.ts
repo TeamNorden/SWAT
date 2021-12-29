@@ -46,7 +46,7 @@ export default class grantDevServer extends TextCommand {
 
 
         try {
-            await user.send(`Hello!\n\nThis message is to inform you that you have been granted authorization to access the SWAT developer portal!\n\nYou can now access the developer portal by going to https://dev.swat.wtf/ and logging in with your Discord account.\n\nIf you have any questions, please join our support server at https://swat.wtf/support and ask for help.\n\nThank you for using SWAT!\n\nYou are also authorized to join the Norden Development server!\nHere is the invite link: ${invite.url}\n\n- SWAT Services`);
+            await user.send(`Hello!\n\nThis message is to inform you that you have been granted authorization to access the SWAT developer portal!\n\nYou can now access the developer portal by going to https://dev.swat.norden.wtf/ and logging in with your Discord account.\n\nIf you have any questions, please join our support server at https://swat.norden.wtf/support and ask for help.\n\nThank you for using SWAT!\n\nYou are also authorized to join the Norden Development server!\nHere is the invite link: ${invite.url}\n\n- SWAT Services`);
         } catch (error) {
             return message.reply("Could not send a DM to that user, they still have been given access to the SWAT developer portal.");
         }

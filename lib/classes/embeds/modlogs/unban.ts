@@ -4,13 +4,13 @@ export const unbanEmbed = async (targetID: Snowflake, staffID: Snowflake, reason
     const unbanEmbed = new MessageEmbed()
         .setColor('#ff0000')
         .setTitle('Unbanned')
-        .setDescription(`${targetID} was unbanned by ${staffID} for ${reason}`)
+        .setDescription(`<@!${targetID}> was unbanned by <@!${staffID}> for ${reason}`)
         .setTimestamp()
         .setFooter(`Case #${lastCase + 1}`)
     const viewCase_UNBAN = new MessageButton({
         label: 'View Case',
         style: 'LINK',
-        url: `https://logs.swat.wtf/case/${newCaseID}`
+        url: `https://logs.swat.norden.wtf/case/${newCaseID}`
     })
     const deleteCase_UNBAN = new MessageButton({
         label: 'Delete Case',

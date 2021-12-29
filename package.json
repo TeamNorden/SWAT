@@ -28,7 +28,7 @@
 		"@types/ms": "^0.7.31",
 		"colorette": "^2.0.16",
 		"discord-api-types": "^0.25.2",
-		"discord.js": "https://github.com/discordjs/discord.js#aa7c1b2081eb77659afd65c2f917afbcab3a162f",
+		"discord.js": "^13.4.0",
 		"dotenv-extended": "^2.9.0",
 		"global": "^4.4.0",
 		"hastebin": "^0.2.1",
