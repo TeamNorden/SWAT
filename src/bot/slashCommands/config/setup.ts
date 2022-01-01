@@ -1,3 +1,5 @@
+import { initProperty } from "@typegoose/typegoose/lib/internal/utils";
+import { isApplicationCommandGuildInteraction, isMessageComponentGuildInteraction } from "discord-api-types/utils/v9";
 import {
 	ChannelLogsQueryOptions,
 	Collection,
@@ -7,9 +9,10 @@ import {
 	Message,
 	Snowflake,
 	User,
-	TextChannel
+	TextChannel,
+    Role
 } from "discord.js";
-import { setLang, setAdmin, setMod, setHelper, setModLogs } from "../../../../lib/classes/db/setupHelper";
+import { setLang, setAdmin, setMod, setHelper, setModLogs, setVerificationChannel, setVerificationRole } from "../../../../lib/classes/db/setupHelper";
 import SlashCommand from "../../../../lib/classes/SlashCommand";
 import BetterClient from "../../../../lib/extensions/BetterClient";
 
@@ -29,6 +32,9 @@ export default class Setup extends SlashCommand {
                 name: 'Language',
                 ask: `What language would you like to use? Valid options are \`en-US\``,
                 check: async (input: Message) => {
+                    if(input.content === 'cancel') {
+                        return input.reply("Setup process terminated.");
+                    }
                     if (input.content.toLowerCase() !== 'en-us') {
                         input.reply('That doesn\'t look like a valid language!');
                         return false
@@ -43,6 +49,9 @@ export default class Setup extends SlashCommand {
                 name: 'Admin Role',
 				ask: `What role should SWAT use to determine if a user is an admin?`,
                 check: async (input: Message) => {
+                    if(input.content === 'cancel') {
+                        return input.reply("Setup process terminated.");
+                    }
                     let role = input.mentions.roles.first() ?? await input.guild?.roles.fetch(input.content.trim()).catch(() => null)
                 
                     if (!role) {
@@ -60,6 +69,9 @@ export default class Setup extends SlashCommand {
                 name: 'Mod Role',
 				ask: `What role should SWAT use to determine if a user is a mod?`,
                 check: async (input: Message) => {
+                    if(input.content === 'cancel') {
+                        return input.reply("Setup process terminated.");
+                    }
                     let role = input.mentions.roles.first() ?? await input.guild?.roles.fetch(input.content.trim()).catch(() => null)
                 
                     if (!role) {
@@ -77,6 +89,9 @@ export default class Setup extends SlashCommand {
                 name: 'Helper Role',
 				ask: `What role should SWAT use to determine if a user is a helper?`,
                 check: async (input: Message) => {
+                    if(input.content === 'cancel') {
+                        return input.reply("Setup process terminated.");
+                    }
                     let role = input.mentions.roles.first() ?? await input.guild?.roles.fetch(input.content.trim()).catch(() => null)
                 
                     if (!role) {
@@ -94,6 +109,9 @@ export default class Setup extends SlashCommand {
                 name: 'Modlogs Channel',
 				ask: `What channel should SWAT use to display moderation logs?`,
                 check: async (input: Message) => {
+                    if(input.content === 'cancel') {
+                        return input.reply("Setup process terminated.");
+                    }
                     let channel = input.mentions.channels.first() ?? await input.guild?.channels.fetch(input.content.trim()).catch(() => null) as TextChannel
                 
                     if (!channel) {
@@ -107,9 +125,48 @@ export default class Setup extends SlashCommand {
                     return true
                 }
             },
-        ]
+            {
+                name: 'Verification Channel',
+				ask: `What channel should SWAT use to verify people?`,
+                check: async (input: Message) => {
+                    if(input.content === 'cancel') {
+                        return input.reply("Setup process terminated.");
+                    }
+                    let channel = input.mentions.channels.first() ?? await input.guild?.channels.fetch(input.content.trim()).catch(() => null) as TextChannel
+                
+                    if (!channel) {
+                        input.reply('Channel not found!')
+                        return false
+                    }
 
-        interaction.channel?.send(`Hello! Welcome to SWAT's setup process, ${interaction.user.username}! Before we can get started, we need to set up some things.\n\nPlease respond to the following questions with the appropriate response.`)
+					await setVerificationChannel(input.guild!.id, channel.id)
+
+                    input.reply(`${channel} has been set as the Verification Channel!`)
+                    return true
+                }
+            },
+            {
+                name: 'Verification Role',
+				ask: `What role should SWAT grant to users after successful verification?`,
+                check: async (input: Message) => {
+                    if(input.content === 'cancel') {
+                        return input.reply("Setup process terminated.");
+                    }
+                    let role = input.mentions.roles.first() ?? await input.guild?.roles.fetch(input.content.trim()).catch(() => null) as Role
+                
+                    if (!role) {
+                        input.reply('Role not found!')
+                        return false
+                    }
+
+					await setVerificationRole(input.guild!.id, role.id)
+
+                    input.reply(`${role} has been set as the Verification Role!`)
+                    return true
+                }
+            },
+        ]
+        interaction.channel?.send(`Hello! Welcome to SWAT's setup process, ${interaction.user.username}! Before we can get started, we need to set up some things.\n\nPlease respond to the following questions with the appropriate response. At any time, you can respond with \`cancel\` to cancel the setup process.`)
         
         for (let status of statuses) {
 

@@ -92,6 +92,42 @@ export const setModLogs = async (guildId: Snowflake, channel: Snowflake) => {
     }
 }
 
+export const setVerificationChannel = async (guildId: Snowflake, channel: Snowflake) => {
+    let settings: DocumentType<BaseGuildSchema> | null = await GuildModel.findOne({ id: guildId })
+
+    if (settings) {
+        settings.config!.verificationChannel = channel
+
+        await settings.save()
+    } else {
+        await (new GuildModel({
+            id: guildId,
+            config: {
+                verificationChannel: channel
+            }
+        } as BaseGuildSchema))
+            .save()
+    }
+}
+
+export const setVerificationRole = async (guildId: Snowflake, role: Snowflake) => {
+    let settings: DocumentType<BaseGuildSchema> | null = await GuildModel.findOne({ id: guildId })
+
+    if (settings) {
+        settings.config!.verificationRole = role
+
+        await settings.save()
+    } else {
+        await (new GuildModel({
+            id: guildId,
+            config: {
+                verificationRole: role
+            }
+        } as BaseGuildSchema))
+            .save()
+    }
+}
+
 export const getLang = async (guildId: Snowflake) => {
     let settings: DocumentType<BaseGuildSchema> | null = await GuildModel.findOne({ id: guildId })
 
@@ -122,11 +158,25 @@ export const getModLogsChannel = async (guildId: Snowflake) => {
     return settings?.config?.modlogsChannel
 }
 
+export const getVerificationChannel = async (guildId: Snowflake) => {
+    let settings: DocumentType<BaseGuildSchema> | null = await GuildModel.findOne({ id: guildId })
+
+    return settings?.config?.verificationChannel
+}
+
+export const getVerificationRole = async (guildId: Snowflake) => {
+    let settings: DocumentType<BaseGuildSchema> | null = await GuildModel.findOne({ id: guildId })
+
+    return settings?.config?.verificationRole
+}
+
 export const getAll = async (guildId: Snowflake) => {
     return {
         language: await getLang(guildId),
         admin: await getAdmin(guildId),
         mod: await getMod(guildId),
-        helper: await getHelper(guildId)
+        helper: await getHelper(guildId),
+        verificationChannel: await getVerificationChannel(guildId),
+        verificationRole: await getVerificationRole(guildId),
     }
 }

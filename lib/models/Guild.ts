@@ -24,6 +24,12 @@ class Config {
 
     @prop({ type: () => String })
     public modlogsChannel?: Snowflake
+
+    @prop({ type: () => String })
+    public verificationChannel?: Snowflake
+
+    @prop({ type: () => String })
+    public verificationRole?: Snowflake
 }
 
 @modelOptions({ 
