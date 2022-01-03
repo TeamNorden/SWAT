@@ -1,11 +1,8 @@
 import { load } from "dotenv-extended";
 import { ShardingManager } from "discord.js";
-import Config from "../config/bot.config";
 import Logger from "../lib/classes/Logger";
 
 load();
-
-const _version = process.env.NODE_ENV === "development" ? `${Config.version}-dev` : Config.version;
 
 let token;
 if(process.env.NODE_ENV === "development") {
@@ -20,7 +17,8 @@ const manager = new ShardingManager("./dist/src/bot/bot.js", {
 	token: token,
 });
 
-Logger.info(`Starting SWAT. MODE: ${process.env.NODE_ENV}`);
+Logger.info(`Starting SWAT. Mode: ${process.env.NODE_ENV}.`);
+
 
 manager.spawn({
 	timeout: -1

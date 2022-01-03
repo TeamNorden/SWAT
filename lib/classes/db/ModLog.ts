@@ -1,5 +1,5 @@
 import ModLogInfractionModel, { BaseModLogInfraction, ModLogID } from '../../models/ModLogInfraction'
-import { Snowflake, MessageEmbed, TextChannel, MessageActionRow, MessageButton, Emoji } from 'discord.js'
+import { Snowflake, TextChannel } from 'discord.js'
 import { DocumentType } from '@typegoose/typegoose'
 import BetterClient from '../../extensions/BetterClient'
 import { getModLogs } from './modLogsChannel'

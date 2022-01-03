@@ -1,12 +1,6 @@
 import {
-	ChannelLogsQueryOptions,
-	Collection,
-	CommandInteraction,
-	GuildTextBasedChannel,
 	Message,
-	Snowflake,
-	User,
-    Channel,
+	Channel,
     TextChannel,
     MessageButton,
     MessageActionRow

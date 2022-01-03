@@ -11,7 +11,7 @@ const client = new BetterClient({
 		activities: [
 			{
 				type: "WATCHING",
-				name: "/"
+				name: "/ | https://norden.wtf"
 			}
 		]
 	},

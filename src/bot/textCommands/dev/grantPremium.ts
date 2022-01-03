@@ -1,13 +1,5 @@
 import {
-	ChannelLogsQueryOptions,
-	Collection,
-	CommandInteraction,
-	GuildTextBasedChannel,
 	Message,
-	Snowflake,
-	User,
-    Channel,
-    TextChannel,
     MessageButton,
     MessageActionRow
 } from "discord.js";

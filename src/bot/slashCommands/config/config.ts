@@ -1,12 +1,4 @@
-import {
-	ChannelLogsQueryOptions,
-	Collection,
-	CommandInteraction,
-	GuildTextBasedChannel,
-	Message,
-	Snowflake,
-	User
-} from "discord.js";
+import { CommandInteraction, GuildTextBasedChannel } from "discord.js";
 import SlashCommand from "../../../../lib/classes/SlashCommand";
 import BetterClient from "../../../../lib/extensions/BetterClient";
 import { setModLogs } from "../../../../lib/classes/db/modLogsChannel";

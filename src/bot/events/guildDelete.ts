@@ -1,7 +1,5 @@
-import { Passthrough } from "@typegoose/typegoose";
 import { Guild } from "discord.js";
 import EventHandler from "../../../lib/classes/EventHandler";
-import GuildSchema from '../../../lib/models/Guild';
 
 export default class GuildDelete extends EventHandler {
 	override async run(guild: Guild) {

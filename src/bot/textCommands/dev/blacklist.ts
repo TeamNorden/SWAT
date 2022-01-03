@@ -1,17 +1,4 @@
-import {
-	ChannelLogsQueryOptions,
-	Collection,
-	CommandInteraction,
-	GuildTextBasedChannel,
-	Message,
-	Snowflake,
-	User,
-    Channel,
-    TextChannel,
-    MessageButton,
-    MessageActionRow,
-    Guild
-} from "discord.js";
+import { Message, Guild } from "discord.js";
 import TextCommand from "../../../../lib/classes/TextCommand";
 import BetterClient from "../../../../lib/extensions/BetterClient";
 import GuildSchema from '../../../../lib/models/Guild';

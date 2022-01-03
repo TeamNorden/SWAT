@@ -1,5 +1,4 @@
 import { getModelForClass, prop, modelOptions, Severity } from '@typegoose/typegoose'
-import { Snowflake } from 'discord.js';
 
 @modelOptions({ 
     schemaOptions: {

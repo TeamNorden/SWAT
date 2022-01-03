@@ -1,16 +1,6 @@
-import {
-	ChannelLogsQueryOptions,
-	Collection,
-	CommandInteraction,
-	GuildMember,
-	GuildTextBasedChannel,
-	Message,
-	Snowflake,
-	User
-} from "discord.js";
+import { CommandInteraction, GuildMember } from "discord.js";
 import SlashCommand from "../../../../lib/classes/SlashCommand";
 import BetterClient from "../../../../lib/extensions/BetterClient";
-import ModLog from "../../../../lib/classes/db/ModLog";
 import { checkCount, punish } from "../../../../lib/classes/db/infraction";
 
 export default class Punish extends SlashCommand {

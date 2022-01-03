@@ -1,16 +1,6 @@
-import {
-	ChannelLogsQueryOptions,
-	Collection,
-	CommandInteraction,
-	GuildTextBasedChannel,
-	Message,
-	Snowflake,
-	TextChannel,
-	User
-} from "discord.js";
+import { CommandInteraction, TextChannel } from "discord.js";
 import SlashCommand from "../../../../lib/classes/SlashCommand";
 import BetterClient from "../../../../lib/extensions/BetterClient";
-import ms from "ms";
 
 export default class Slowmode extends SlashCommand {
 	constructor(client: BetterClient) {

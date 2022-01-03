@@ -1,7 +1,7 @@
 import path from "path";
 import mongoose from "mongoose";
 import Button from "../classes/Button";
-import { TimeoutError, RegExpWorker } from "regexp-worker";
+import { RegExpWorker } from "regexp-worker";
 import DropDown from "../classes/DropDown";
 import * as Logger from "../classes/Logger";
 import Config from "../../config/bot.config";
@@ -16,7 +16,6 @@ import { Client, ClientOptions, Collection } from "discord.js";
 import TextCommandHandler from "../classes/TextCommandHandler";
 import SlashCommandHandler from "../classes/SlashCommandHandler";
 import GuildSchema from "../models/Guild";
-import { setModLogs } from '../classes/db/modLogsChannel'
 export default class BetterClient extends Client {
 	public usersUsingBot: Set<string>;
 	public readonly config;

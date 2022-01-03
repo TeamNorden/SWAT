@@ -1,4 +1,4 @@
-import { CommandInteraction, Message, MessageButton, MessageActionRow } from "discord.js";
+import { CommandInteraction, MessageButton, MessageActionRow } from "discord.js";
 import SlashCommand from "../../../../lib/classes/SlashCommand";
 import BetterClient from "../../../../lib/extensions/BetterClient";
 

@@ -1,21 +1,11 @@
 import {
-	ChannelLogsQueryOptions,
-	Collection,
-	CommandInteraction,
-	GuildTextBasedChannel,
 	Message,
-	Snowflake,
 	User,
     Channel,
     TextChannel,
-    MessageButton,
-    MessageActionRow,
-    GuildMember,
-	MessageSelectMenu
 } from "discord.js";
 import TextCommand from "../../../../lib/classes/TextCommand";
 import BetterClient from "../../../../lib/extensions/BetterClient";
-import GuildSchema from '../../../../lib/models/Guild';
 
 export default class grantDevServer extends TextCommand {
 	constructor(client: BetterClient) {
@@ -41,7 +31,7 @@ export default class grantDevServer extends TextCommand {
         }
 
 		// generate a one time invite with the guild id
-		const devServer = this.client.guilds.cache.get(this.client.config.devServer);
+		const devServer = this.client.guilds.cache.get(this.client.config.development.devServer);
 		const invite = await devServer!.invites.create(devServer!.channels.cache.find((c: Channel) => c.type === 'GUILD_TEXT') as TextChannel, { maxAge: 86400, maxUses: 1 });
 
 

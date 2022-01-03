@@ -1,14 +1,6 @@
-import { initProperty } from "@typegoose/typegoose/lib/internal/utils";
-import { isApplicationCommandGuildInteraction, isMessageComponentGuildInteraction } from "discord-api-types/utils/v9";
 import {
-	ChannelLogsQueryOptions,
-	Collection,
 	CommandInteraction,
-	GuildMember,
-	GuildTextBasedChannel,
 	Message,
-	Snowflake,
-	User,
 	TextChannel,
     Role
 } from "discord.js";
