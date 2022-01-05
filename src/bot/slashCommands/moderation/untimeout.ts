@@ -46,7 +46,7 @@ export default class Untimeout extends SlashCommand {
             return interaction.reply(`That user isn't timed out.`);
         }
         
-        await member.timeout(0);
+        await member.timeout(null);
 
         let modLogs = new ModLog(interaction!.guild!.id)
         await modLogs.create({ type: 'UNTIMEOUT', targetID: user.id, staffID: interaction.user.id, reason: reason })
