@@ -11,6 +11,7 @@ export default class Untimeout extends SlashCommand {
 			permissions: ["MODERATE_MEMBERS"],
 			clientPermissions: ["MODERATE_MEMBERS", "READ_MESSAGE_HISTORY", "MANAGE_MESSAGES"],
 			lockdown: false,
+			needsVote: true,
 			options: [
 				{
 					name: "user",

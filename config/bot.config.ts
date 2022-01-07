@@ -8,6 +8,7 @@ export default {
 
 	// Bot Contributors
 	partners: [""],
+	premium: [""],
 	contributors: [""],
 	bugHunter: [""],
 	supporters: [""],
@@ -15,6 +16,7 @@ export default {
 	// Web Servers
 	website: "https://norden.wtf/",
 	panel: "https://panel.norden.wtf/",
+	votePortal: "https://vote.norden.wtf/",
 
 	// Development Centric Info
 	development: {
@@ -22,6 +24,11 @@ export default {
 		devServer: "850054869980413983",
 		devRedacted: "924839405942874164",
 		devTeam: "922577892041429012",
+	},
+
+	// Bot Logging Channels
+	logging: {
+		votes: "850054869980413988",
 	},
 
 

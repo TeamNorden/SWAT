@@ -5,7 +5,7 @@ import BetterClient from "../../../../lib/extensions/BetterClient";
 export default class Ping extends SlashCommand {
 	constructor(client: BetterClient) {
 		super("invite", client, {
-			description: `Invite SWAT here.`
+			description: `Invite SWAT here.`,
 		});
 	}
 

@@ -17,6 +17,7 @@ export default class Purge extends SlashCommand {
 			permissions: ["MANAGE_MESSAGES"],
 			clientPermissions: ["MANAGE_MESSAGES", "READ_MESSAGE_HISTORY"],
 			lockdown: false,
+			needsVote: true,
 			options: [
 				{
 					name: "amount",

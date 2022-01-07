@@ -14,6 +14,7 @@ export interface SlashCommandOptions {
 	clientPermissions?: PermissionString[];
 	devOnly?: boolean;
 	lockdown?: boolean;
+	needsVote?: boolean;
 	guildOnly?: boolean;
 	ownerOnly?: boolean;
 }
