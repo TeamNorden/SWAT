@@ -97,6 +97,9 @@ export default class Ban extends SlashCommand {
         
         
         // ban the user
+		await member.ban({
+			reason: reason,
+		});
 		
 
         let modLogs = new ModLog(interaction!.guild!.id)
