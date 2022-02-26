@@ -26,7 +26,7 @@ export const timeoutEmbed = async (targetID: Snowflake, staffID: Snowflake, reas
     })
     const untimout_TIMEOUT = new MessageButton({
         label: 'Untimeout User',
-        customId: 'untimeoutUser',
+        customId: `untimeoutUser_${newCaseID}`,
         style: 'SUCCESS',
         emoji: '✅'
     })

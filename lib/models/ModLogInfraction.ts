@@ -7,7 +7,7 @@ export type ModLogID = `${Snowflake}-${Snowflake}-${number}`
 // Type Of The Infraction created
 export type ModLogCaseType = 'BAN' | 'STRIKE' | 'KICK' | 'UNBAN' | 'UNSTRIKE' | 'TIMEOUT' | 'UNTIMEOUT'
 
-/* Just In Case:
+/* Note for development staff:
 * BaseModLogInfraction is NOT gonna be used to init new ModLogs, use the ModLog class in the classes/db folder for that.
 * The class below is only for creating them in the db, whereas the ModLog class will do creation and deletion and etc
 */
@@ -15,7 +15,7 @@ export type ModLogCaseType = 'BAN' | 'STRIKE' | 'KICK' | 'UNBAN' | 'UNSTRIKE' | 
 
 export class BaseModLogInfraction {
     @prop({ type: String })
-    _id?: ModLogID // MODLOG_ID to fetch the ModLog Infraction
+    _id?: ModLogID
 
     @prop({ type: String, required: true })
     type?: ModLogCaseType

@@ -36,14 +36,6 @@ export interface ButtonOptions {
 	ownerOnly?: boolean;
 }
 
-export interface ButtonOptions {
-	permissions: PermissionString[];
-	clientPermissions: PermissionString[];
-	devOnly?: boolean;
-	guildOnly?: boolean;
-	ownerOnly?: boolean;
-}
-
 export interface GeneratedMessage {
 	embeds: MessageEmbed[];
 	components: MessageActionRow[];
