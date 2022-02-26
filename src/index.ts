@@ -17,7 +17,7 @@ const manager = new ShardingManager("./dist/src/bot/bot.js", {
 	token: token,
 });
 
-Logger.info(`Starting SWAT. Mode: ${process.env.NODE_ENV ? process.env.NODE_ENV : "who fucking knows"}.`);
+Logger.info(`Starting SWAT. Mode: ${process.env.NODE_ENV}.`);
 
 
 manager.spawn({

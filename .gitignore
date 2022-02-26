@@ -1,5 +1,10 @@
 .env
+.env.dev
+.env.prod
+.env.beta
+.env.premium
 node_modules
 yarn.lock
 dist
 .idea
+yarn-error.log
