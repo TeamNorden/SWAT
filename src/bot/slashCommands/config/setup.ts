@@ -4,7 +4,6 @@ import {
 	TextChannel,
     Role
 } from "discord.js";
-import { createInputFiles } from "typescript";
 import { setLang, setAdmin, setMod, setHelper, setModLogs, setVerificationChannel, setVerificationRole } from "../../../../lib/classes/db/setupHelper";
 import SlashCommand from "../../../../lib/classes/SlashCommand";
 import BetterClient from "../../../../lib/extensions/BetterClient";
@@ -102,6 +101,9 @@ export default class Setup extends SlashCommand {
                 name: 'Modlogs Channel',
 				ask: `What channel should SWAT use to display moderation logs?`,
                 check: async (input: Message) => {
+                    if(input.content === 'cancel') {
+                        return input.reply("Setup process terminated.");
+                    }
                     let channel = input.mentions.channels.first() ?? await input.guild?.channels.fetch(input.content.trim()).catch(() => null) as TextChannel
                 
                     if (!channel) {
@@ -156,17 +158,13 @@ export default class Setup extends SlashCommand {
                 }
             },
         ]
-        interaction.channel?.send(`Hello! Welcome to SWAT's setup process, ${interaction.user.username}! Before we can get started, we need to set up some things.\n\nPlease respond to the following questions with the appropriate response(s). At any time, you can respond with \`--cancel\` to cancel the setup process.`)
+        interaction.channel?.send(`Hello! Welcome to SWAT's setup process, ${interaction.user.username}! Before we can get started, we need to set up some things.\n\nPlease respond to the following questions with the appropriate response. At any time, you can respond with \`cancel\` to cancel the setup process.`)
         
-        let amountSkipped = 0
-
         for (let status of statuses) {
 
 			interaction.channel?.send(status.ask! ?? ('Please provide ' + status))
             
             let finished = false
-            let shouldBreak = false
-            let shouldContinue = false
             
             while (!finished) {
                 let collected = await interaction.channel!.awaitMessages({
@@ -174,38 +172,12 @@ export default class Setup extends SlashCommand {
                     max: 1
                 }).catch(console.error)
 
-                if(collected?.first()!.content === '--cancel') {
-                    shouldBreak = true
-                    interaction.channel?.send('Setup process terminated.')
-                    break
-                }
-
-                if(collected?.first()!.content === '--skip') {
-                    amountSkipped++
-                    amountSkipped = statuses.length - statuses.indexOf(status)
-                    shouldContinue = true
-                    interaction.channel?.send(`Skipped ${status.name}.`)
-                    break
-                }
-
                 let result = await status.check(collected?.first()!)
                 
                 if (result === true) finished = true
                 else interaction.channel?.send(status.ask)
             }
-            if(shouldContinue) {
-                continue
-            }
-
-            if(shouldBreak) {
-                break
-            }
         }
-
-        if(amountSkipped == statuses.length) {
-            interaction.channel?.send("Ok, maybe we'll set this up later.. :pensive:")
-        } else {
-            return interaction.channel?.send('Setup complete! You can now use SWAT!')
-        }
+		return interaction.channel?.send('Setup complete! You can now use SWAT!')
 	}
 }
