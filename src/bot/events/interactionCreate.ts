@@ -18,10 +18,12 @@ export default class InteractionCreate extends EventHandler {
 		if (interaction.isCommand()) {
 			this.client.stats.commandsRun++;
 			return this.client.slashCommandHandler.handleCommand(interaction);
-		} else if (interaction.isButton())
+		} else if (interaction.isButton()) {
 			if (interaction.customId === "revertRemove") {
 				await interaction.reply({ content: "LOOOOOOOOOL you are truly an idiot, you can't revert this action. restart the bot with a special script or smth idk" });
 			}
+			return this.client.buttonHandler.handleButton(interaction);
+		}
 		else if (interaction.isSelectMenu())
 			return this.client.dropDownHandler.handleDropDown(interaction);
 		const error = new Error("Invalid Interaction: Never seen this before.");
