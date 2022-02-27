@@ -43,7 +43,6 @@ export default {
 		"https://discord.com/api/oauth2/authorize?client_id=914290270508572692&permissions=292556957910&scope=applications.commands%20bot/",
 	recommendedInvite:
 		"https://discord.com/api/oauth2/authorize?client_id=914290270508572692&permissions=8&scope=applications.commands%20bot/",
-	hastebin: "https://h.inv.wtf/",
 
 	// Colours
 	colors: {

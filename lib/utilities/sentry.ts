@@ -3,7 +3,7 @@ import { load } from "dotenv-extended";
 import * as Sentry from "@sentry/node";
 import { Interaction, Message } from "discord.js";
 
-load();
+
 
 export default function init() {
 	Sentry.init({

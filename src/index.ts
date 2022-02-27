@@ -1,20 +1,21 @@
 import { load } from "dotenv-extended";
+import dotenv from "dotenv";
+dotenv.config();
 import { ShardingManager } from "discord.js";
 import Logger from "../lib/classes/Logger";
 
-load();
+const env = {
+	development: ".env.dev",
+	production: ".env.prod",
+	beta: ".env.beta",
+};
 
-let token;
-if(process.env.NODE_ENV === "development") {
-	token = process.env.DEV_TOKEN;
-} else if (process.env.NODE_ENV === "beta") {
-	token = process.env.BETA_TOKEN;
-} else {
-	token = process.env.PROD_TOKEN;	
-}
+load({
+	path: env[process.env.NODE_ENV],
+})
 
 const manager = new ShardingManager("./dist/src/bot/bot.js", {
-	token: token,
+	token: process.env.DISCORD_TOKEN,
 });
 
 Logger.info(`Starting SWAT. Mode: ${process.env.NODE_ENV}.`);

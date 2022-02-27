@@ -1,4 +1,3 @@
-import { createPaste } from "hastebin";
 import { GeneratedMessage, GenerateTimestampOptions } from "../../typings";
 import { permissionNames } from "./permissions";
 import { existsSync, mkdirSync, readdirSync } from "fs";
@@ -97,23 +96,6 @@ export default class Functions {
 			components,
 			ephermal
 		};
-	}
-
-	public async uploadHaste(content: string): Promise<string | null> {
-		try {
-			return (
-				(await createPaste(content, {
-					server: this.client.config.hastebin
-				})) + ".md"
-			);
-		} catch (error) {
-			this.client.logger.error(error);
-			this.client.logger.sentry.captureWithExtras(error, {
-				Hastebin: this.client.config.hastebin,
-				Content: content
-			});
-			return null;
-		}
 	}
 
 	public generateRandomId(
