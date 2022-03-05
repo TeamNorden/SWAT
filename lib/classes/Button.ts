@@ -7,6 +7,7 @@ export default class Button {
 	private readonly permissions: PermissionString[];
 	private readonly clientPermissions: PermissionString[];
 	private readonly devOnly: boolean;
+	private readonly invokerOnly: boolean;
 	private readonly guildOnly: boolean;
 	private readonly ownerOnly: boolean;
 	private readonly client: BetterClient;
@@ -20,6 +21,7 @@ export default class Button {
 
 		this.devOnly = options.devOnly || false;
 		this.guildOnly = options.guildOnly || false;
+		this.invokerOnly = options.invokerOnly || false;
 		this.ownerOnly = options.ownerOnly || false;
 
 		this.client = client;
@@ -28,6 +30,9 @@ export default class Button {
 	public validate(interaction: ButtonInteraction): string | null {
 		if (this.guildOnly && !interaction.inGuild())
 			return "This button can only be used in guilds!";
+		else if (this.invokerOnly && interaction.message!.interaction!.user.id !== interaction.user.id) {
+			return `Wait a minute! This is <@!${interaction.message!.interaction!.user.id}>'s button, not yours! :rage:`
+		}
 		else if (this.ownerOnly && interaction.guild?.ownerId !== interaction.user.id)
 			return "This button can only be ran by the owner of this guild!";
 		else if (this.devOnly && !this.client.config.admins.includes(interaction.user.id))

@@ -33,6 +33,7 @@ export interface ButtonOptions {
 	clientPermissions: PermissionString[];
 	devOnly?: boolean;
 	guildOnly?: boolean;
+	invokerOnly?: boolean;
 	ownerOnly?: boolean;
 }
 
@@ -41,6 +42,7 @@ export interface ButtonOptions {
 	clientPermissions: PermissionString[];
 	devOnly?: boolean;
 	guildOnly?: boolean;
+	invokerOnly?: boolean;
 	ownerOnly?: boolean;
 }
 
