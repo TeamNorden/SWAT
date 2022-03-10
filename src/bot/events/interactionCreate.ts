@@ -1,6 +1,6 @@
 import { Interaction, MessageActionRow, MessageButton, MessageEmbed, Message } from "discord.js";
 import EventHandler from "../../../lib/classes/EventHandler";
-import { SetupAutomodEmbed, SetupComponents, SetupComponentsDisabled, SetupEmbed } from '../utils/SetupInteractionUtils'
+import { SetupAutomodEmbed, SetupComponents, SetupComponentsDisabled, SetupEmbed, SetupAutomodPrompts } from '../utils/SetupInteractionUtils'
 
 export default class InteractionCreate extends EventHandler {
 
@@ -27,32 +27,27 @@ export default class InteractionCreate extends EventHandler {
 					ephemeral: true,
 				});		
 			}
+			const setupObject = {
+				AUTOMOD: SetupAutomodPrompts,
+			}
+
+			if (interaction.customId.startsWith('SETUP')) {
+				const buttonSubId = interaction.customId.split('_').slice(1).join('_')
+			
+				const setup = setupObject[buttonSubId]
+			}
+
 			if (interaction.customId === "revertRemove") {
 				await interaction.reply({ content: "LOOOOOOOOOL you are truly an idiot, you can't revert this action. restart the bot with a special script or smth idk" });
 			}
 			if (interaction.customId === "setupTerminate") {
-				if (interaction.message!.interaction!.user.id !== interaction.user.id) {
-					return await interaction.reply({
-						content: `Wait a minute! This is <@!${interaction.message!.interaction!.user.id}>'s button, not yours! :rage:`,
-						ephemeral: true,
-					});		
-				}
 				await interaction.update({
 					components: SetupComponentsDisabled,
 					embeds: [SetupEmbed]
 				});
 			} else if (interaction.customId === "setupTerminateAllData") {
-				if (interaction.message!.interaction!.user.id !== interaction.user.id) {
-					return await interaction.reply({
-						content: `Wait a minute! This is <@!${interaction.message!.interaction!.user.id}>'s button, not yours! :rage:`,
-						ephemeral: true,
-					});
-				}
-
 				await interaction.update({
 					content: `Please confirm that you want to delete all data. This action cannot be reverted. (y/n)`,
-					embeds: [],
-					components: []
 				});
 				
 				const filter = (m: Message) => m.author.id === interaction.user.id;
@@ -70,14 +65,8 @@ export default class InteractionCreate extends EventHandler {
 				});
 			}
 			if (interaction.customId === "setupAutomod") {
-				if (interaction.message!.interaction!.user.id !== interaction.user.id) {
-					return await interaction.reply({
-						content: `Wait a minute! This is <@!${interaction.message!.interaction!.user.id}>'s button, not yours! :rage:`,
-						ephemeral: true,
-					});	
-				}
 					await interaction.update({
-						components: [],
+						components: [SetupAutomodPrompts],
 						embeds: [SetupAutomodEmbed]
 					});
 			}

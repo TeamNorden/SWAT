@@ -21,7 +21,35 @@ export const SetupPrompts = new MessageActionRow()
             .setLabel("Automod")
             .setStyle("SECONDARY")
             .setEmoji("🔨")
-            .setCustomId("setupAutomod"),
+            .setCustomId("SETUP_AUTOMOD"),
+    )
+
+export const SetupAutomodPrompts = new MessageActionRow()
+    .addComponents(
+        new MessageButton()
+            .setLabel("Ghost Pings")
+            .setStyle("SECONDARY")
+            .setEmoji("👻")
+            .setCustomId("noReply"),
+        new MessageButton()
+            .setLabel("Enabled")
+            .setStyle("SUCCESS")
+            .setEmoji("✅")
+            .setCustomId("setupAutomodGhostPings"),
+    )
+
+export const SetupAutomodPrompts2 = new MessageActionRow()
+    .addComponents(
+        new MessageButton()
+            .setLabel("Ghost Pings")
+            .setStyle("SECONDARY")
+            .setEmoji("👻")
+            .setCustomId("noReply"),
+        new MessageButton()
+            .setLabel("Enabled")
+            .setStyle("SUCCESS")
+            .setEmoji("✅")
+            .setCustomId("setupAutomodGhostPings"),
     )
 
 export const SetupAdminActions = new MessageActionRow()
@@ -102,7 +130,7 @@ export const SetupAutomodEmbed = new MessageEmbed()
 export const SetupComponents = [SetupPrompts, SetupAdminActions]
 export const SetupComponentsDisabled = [SetupPromptsDisabled, SetupAdminActionsDisabled]
 
-export const SetupAutomodComponents: [] = []
+export const SetupAutomodComponents = [SetupAutomodPrompts, SetupAutomodPrompts2]
 
 // export const getButtonsDisabledRows = (rows: MessageActionRow[]) => {
 //     return rows.map(row => {
