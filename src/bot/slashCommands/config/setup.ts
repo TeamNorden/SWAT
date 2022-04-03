@@ -1,16 +1,9 @@
 import {
 	CommandInteraction,
-	Message,
-	TextChannel,
-    Role,
-    MessageActionRow,
-    MessageButton,
-    MessageEmbed
 } from "discord.js";
-import { setLang, setAdmin, setMod, setHelper, setModLogs, setVerificationChannel, setVerificationRole } from "../../../../lib/classes/db/setupHelper";
-import SlashCommand from "../../../../lib/classes/SlashCommand";
-import BetterClient from "../../../../lib/extensions/BetterClient";
-import { SetupComponents, SetupEmbed } from '../../utils/SetupInteractionUtils'
+import SlashCommand from "../../../../lib/classes/SlashCommand.js";
+import BetterClient from "../../../../lib/extensions/BetterClient.js";
+import { SetupComponents, SetupEmbed } from '../../utils/SetupCmdUtils.js'
 
 export default class Setup extends SlashCommand {
 	constructor(client: BetterClient) {

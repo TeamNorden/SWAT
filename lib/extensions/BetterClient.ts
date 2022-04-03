@@ -1,152 +1,277 @@
-import path from "path";
-import mongoose from "mongoose";
-import Button from "../classes/Button";
-import { RegExpWorker } from "regexp-worker";
-import DropDown from "../classes/DropDown";
-import * as Logger from "../classes/Logger";
-import Config from "../../config/bot.config";
-import Functions from "../utilities/functions";
-import { CachedStats, Stats } from "../../typings";
-import TextCommand from "../classes/TextCommand";
-import EventHandler from "../classes/EventHandler";
-import SlashCommand from "../classes/SlashCommand";
-import ButtonHandler from "../classes/ButtonHandler";
-import DropDownHandler from "../classes/DropDownHandler";
+import { resolve } from "path";
+import { MongoClient } from "mongodb";
+import * as metrics from "datadog-metrics";
 import { Client, ClientOptions, Collection } from "discord.js";
-import TextCommandHandler from "../classes/TextCommandHandler";
-import SlashCommandHandler from "../classes/SlashCommandHandler";
-import GuildSchema from "../models/Guild";
+import Button from "../classes/Button.js";
+import DropDown from "../classes/DropDown.js";
+import * as Logger from "../classes/Logger.js";
+import Config from "../../config/bot.config.js";
+import Functions from "../utilities/functions.js";
+import { CachedStats, Stats } from "../../typings";
+import TextCommand from "../classes/TextCommand.js";
+import EventHandler from "../classes/EventHandler.js";
+import SlashCommand from "../classes/SlashCommand.js";
+import ButtonHandler from "../classes/ButtonHandler.js";
+import DropDownHandler from "../classes/DropDownHandler.js";
+import TextCommandHandler from "../classes/TextCommandHandler.js";
+import SlashCommandHandler from "../classes/SlashCommandHandler.js";
+import AutoCompleteHandler from "../classes/AutoCompleteHandler.js";
+import AutoComplete from "../classes/AutoComplete.js";
+
 export default class BetterClient extends Client {
-	public usersUsingBot: Set<string>;
-	public readonly config;
-	public readonly functions: Functions;
-	public readonly logger: Logger.Logger;
-	public readonly slashCommandHandler: SlashCommandHandler;
-	public slashCommands: Collection<string, SlashCommand>;
-	public readonly textCommandHandler: TextCommandHandler;
-	public textCommands: Collection<string, TextCommand>;
-	public readonly buttonHandler: ButtonHandler;
-	public buttons: Collection<string, Button>;
-	public readonly dropDownHandler: DropDownHandler;
-	public dropDowns: Collection<string, DropDown>;
-	public events: Map<string, EventHandler>;
-	public mongoStatus: number = 0;
-	public GuildSchema = GuildSchema;
-	public readonly version: string;
-	public stats: Stats;
-	public cachedStats: CachedStats;
-	public readonly __dirname: string;
-	public readonly regexWorker: RegExpWorker;
-	constructor(options: ClientOptions) {
-		super(options);
+    /**
+     * A set of users that are currently using the bot.
+     */
+    public usersUsingBot: Set<string>;
 
-		this.__dirname = path.resolve();
+    /**
+     * The config for our client.
+     */
+    public readonly config;
 
-		this.regexWorker = new RegExpWorker(100);
+    /**
+     * The functions for our client.
+     */
+    public readonly functions: Functions;
 
-		this.usersUsingBot = new Set();
-		this.config = Config;
-		this.functions = new Functions(this);
-		this.logger = Logger.default;
+    /**
+     * The logger for our client.
+     */
+    public readonly logger: Logger.Logger;
 
-		this.slashCommandHandler = new SlashCommandHandler(this);
-		this.slashCommands = new Collection();
+    /**
+     * The slashCommandHandler for our client.
+     */
+    public readonly slashCommandHandler: SlashCommandHandler;
 
-		this.textCommandHandler = new TextCommandHandler(this);
-		this.textCommands = new Collection();
+    /**
+     * The slashCommands for our client.
+     */
+    public slashCommands: Collection<string, SlashCommand>;
 
-		this.buttonHandler = new ButtonHandler(this);
-		this.buttons = new Collection();
+    /**
+     * The textCommandHandler for our client.
+     */
+    public readonly textCommandHandler: TextCommandHandler;
 
-		this.dropDownHandler = new DropDownHandler(this);
-		this.dropDowns = new Collection();
+    /**
+     * The textCommands for our client.
+     */
+    public textCommands: Collection<string, TextCommand>;
 
-		this.events = new Map();
+    /**
+     * The buttonHandler for our client.
+     */
+    public readonly buttonHandler: ButtonHandler;
 
-		this.version =
-			process.env.NODE_ENV === "development"
-				? `${this.config.version}-dev`
-				: this.config.version;
+    /**
+     * The buttons for our client.
+     */
+    public buttons: Collection<string, Button>;
 
-		this.stats = {
-			messageCount: 0,
-			commandsRun: 0
-		};
+    /**
+     * The dropDownHandler for our client.
+     */
+    public readonly dropDownHandler: DropDownHandler;
 
-		this.cachedStats = {
-			guilds: 0,
-			users: 0,
-			cachedUsers: 0,
-			channels: 0,
-			roles: 0
-		};
+    /**
+     * The dropDowns for our client.
+     */
+    public dropDowns: Collection<string, DropDown>;
 
-		this.dropDownHandler.loadDropDowns();
-		this.buttonHandler.loadButtons();
-		this.slashCommandHandler.loadCommands();
-		this.textCommandHandler.loadCommands();
-		this.loadEvents();
-	}
+    /**
+     * The autoCompleteHandler for our client.
+     */
+    public readonly autoCompleteHandler: AutoCompleteHandler;
 
-	override async login() {
-		await mongoose.connect(process.env.MONGO_URI).then((data) => {
-			this.mongoStatus = data.connection.readyState;
-		});
-		return super.login();
-	}
+    /**
+     * The autoCompletes for our client.
+     */
+    public autoCompletes: Collection<string, AutoComplete>;
 
-	private loadEvents() {
-		return this.functions
-			.getFiles(`${(this, this.__dirname)}/dist/src/bot/events`, ".js", true)
-			.forEach(async (eventFileName) => {
-				const eventFile = await import(`./../../src/bot/events/${eventFileName}`);
-				const event: EventHandler = new eventFile.default(
-					this,
-					eventFileName.split(".js")[0]
-				);
-				event.listen();
-				return this.events.set(event.name, event);
-			});
-	}
+    /**
+     * The events for our client.
+     */
+    public events: Map<string, EventHandler>;
 
-	public async fetchStats() {
-		const stats = await this.shard?.broadcastEval((client) => {
-			return {
-				guilds: client.guilds.cache.size,
-				users: client.guilds.cache.reduce(
-					(previous, guild) => previous + guild.memberCount,
-					0
-				),
-				cachedUsers: client.users.cache.size,
-				channels: client.channels.cache.size,
-				roles: client.guilds.cache.reduce(
-					(previous, guild) => previous + guild.roles.cache.size,
-					0
-				)
-			};
-		});
+    /**
+     * Our MongoDB database.
+     */
+    public readonly mongo: MongoClient;
 
-		const reducedStats = stats?.reduce((previous, current) => {
-			// @ts-ignore
-			Object.keys(current).forEach((key) => (previous[key] += current[key]));
-			return previous;
-		});
-		this.cachedStats = reducedStats || this.cachedStats;
-		return reducedStats || this.cachedStats;
-	}
+    /**
+     * Our data dog client.
+     */
+    public readonly dataDog: typeof metrics;
 
-	public async executeRegex(regex: RegExp, content: string) {
-		try {
-			const result = await this.regexWorker.execRegExp(regex, content);
-			return result.matches.length || regex.global ? result.matches : null;
-		} catch (error: any) {
-			if (error.message !== null && error.elapsedTimeMs !== null) return null;
-			this.logger.error(error);
-			this.logger.sentry.captureWithExtras(error, {
-				"Regular Expression": regex,
-				Content: content
-			});
-			return null;
-		}
-	}
+    /**
+     * The current version of our client.
+     */
+    public readonly version: string;
+
+    /**
+     * Our client's stats.
+     */
+    public stats: Stats;
+
+    /**
+     * Our client's cached stats.
+     */
+    public cachedStats: CachedStats;
+
+    /**
+     * __dirname is not in our version of ECMA, so we make do with a shitty fix.
+     */
+    public readonly __dirname: string;
+
+    /**
+     * Create our client.
+     * @param options The options for our client.
+     */
+    constructor(options: ClientOptions) {
+        super(options);
+
+        this.__dirname = resolve();
+
+        this.usersUsingBot = new Set();
+        this.config = Config;
+        this.functions = new Functions(this);
+        this.logger = Logger.default;
+
+        this.slashCommandHandler = new SlashCommandHandler(this);
+        this.slashCommands = new Collection();
+
+        this.textCommandHandler = new TextCommandHandler(this);
+        this.textCommands = new Collection();
+
+        this.buttonHandler = new ButtonHandler(this);
+        this.buttons = new Collection();
+
+        this.dropDownHandler = new DropDownHandler(this);
+        this.dropDowns = new Collection();
+
+        this.autoCompleteHandler = new AutoCompleteHandler(this);
+        this.autoCompletes = new Collection();
+
+        this.events = new Map();
+
+        this.mongo = new MongoClient(process.env.MONGO_URI);
+
+        this.version =
+            process.env.NODE_ENV === "development"
+                ? `${this.config.version}-dev`
+                : this.config.version;
+
+        this.stats = {
+            messageCount: 0,
+            commandsRun: 0
+        };
+
+        this.cachedStats = {
+            guilds: 0,
+            users: 0,
+            cachedUsers: 0,
+            channels: 0,
+            roles: 0
+        };
+
+        this.dropDownHandler.loadDropDowns();
+        this.buttonHandler.loadButtons();
+        this.slashCommandHandler.loadSlashCommands();
+        this.textCommandHandler.loadTextCommands();
+        this.autoCompleteHandler.loadAutoCompletes();
+        this.loadEvents();
+
+        // @ts-ignore
+        this.dataDog = metrics.default;
+        if (this.config.dataDog.apiKey?.length) {
+            this.dataDog.init({
+                flushIntervalSeconds: 0,
+                apiKey: this.config.dataDog.apiKey,
+                prefix: `${this.config.botName}.`,
+                defaultTags: [`env:${process.env.NODE_ENV}`]
+            });
+            this.logger.info("DataDog initialized.");
+            setInterval(() => {
+                this.dataDog.gauge("guilds", this.cachedStats.guilds);
+                this.dataDog.gauge("users", this.cachedStats.users);
+                if (this.isReady())
+                    this.dataDog.flush(
+                        () =>
+                            this.logger.info(`Flushed information to DataDog.`),
+                        error => {
+                            this.logger.error(error);
+                            this.logger.sentry.captureException(error);
+                        }
+                    );
+            }, 60000);
+        }
+    }
+
+    /**
+     * Connect to MongoDB and login to Discord.
+     */
+    override async login() {
+        await this.mongo.connect();
+        return super.login();
+    }
+
+    /**
+     * Load all the events in the events directory.
+     */
+    private loadEvents() {
+        return this.functions
+            .getFiles(`${this.__dirname}/dist/src/bot/events`, ".js", true)
+            .forEach(async eventFileName => {
+                const eventFile = await import(
+                    `./../../src/bot/events/${eventFileName}`
+                );
+                // eslint-disable-next-line new-cap
+                const event: EventHandler = new eventFile.default(
+                    this,
+                    eventFileName.split(".js")[0]
+                );
+                event.listen();
+                return this.events.set(event.name, event);
+            });
+    }
+
+    /**
+     * Reload all the events in the events directory.
+     */
+    public reloadEvents() {
+        this.events.forEach(event => event.removeListener());
+        this.loadEvents();
+    }
+
+    /**
+     * Fetch all the stats for our client.
+     */
+    public async fetchStats() {
+        const stats = await this.shard?.broadcastEval(client => {
+            return {
+                guilds: client.guilds.cache.size,
+                users: client.guilds.cache.reduce(
+                    (previous, guild) => previous + (guild.memberCount ?? 0),
+                    0
+                ),
+                cachedUsers: client.users.cache.size,
+                channels: client.channels.cache.size,
+                roles: client.guilds.cache.reduce(
+                    (previous, guild) => previous + guild.roles.cache.size,
+                    0
+                )
+            };
+        });
+
+        const reducedStats = stats?.reduce((previous, current) => {
+            Object.keys(current).forEach(
+                // @ts-ignore
+                key => (previous[key] += current[key])
+            );
+            return previous;
+        });
+        this.cachedStats = reducedStats || this.cachedStats;
+        return reducedStats || this.cachedStats;
+    }
 }

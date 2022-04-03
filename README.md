@@ -1,56 +1,16 @@
-![SWAT Banner](assets/SWAT_BANNER_1920x750.png)
-# SWAT
+# TypeScript Discord Boilerplate
 
-This is SWAT, a moderation and automoderation bot for Discord. Made for all types of server setups and made to give moderators plenty of choice when handling different moderation scenarios.
+Welcome to the template repository for my TypeScript Discord bots. Please feel free to use this template repository if wanted, please provide credit to this repository when doing so.
 
-Version is currently **__0 Dev__**. This means that the core functionality of the bot is still largely untested and under developed, there's a high probability that the bot will break.
-To keep updated with the bot and it's development, join the [Support Server](#support).
+## Notes
 
-## Contributors
-@Codeize
-- [GitHub](https://github.com/Codeize)
-- [Twitter](https://twitter.com/Codeize)
-
-@FadTheChad
-- [GitHub](https://github.com/FadTheChad)
-- [Twitter](https://twitter.com/DankML_Pk)
-
-## License
-At a high level, here's the cans and cannots of the TeamNorden x SWAT license.
-
-YOU MAY:
-
-- (a) View the code.
-
-- (b) Edit the code without sharing it.
-
-- (c) Privately run the code without sharing it.
-
-YOU MAY NOT, BUT NOT LIMITED TO:
-
-- (a) Share or distribute the code in any way, including;
-
-- (b) Hosting a modified or unmodified version of the code for anyone other than Yourself to use.
-
-This is not an exhaustive list of the terms of use for SWAT, and exemptions can be made at the sole discretion of TeamNorden.
-If you are interested in this or have any additional queries please [read the license fully](https://github.com/TeamNorden/SWAT/blob/main/LICENSE.md) or [join our support server](#support)
-
-## Contributing
-I'm more than happy to let anyone add almost anything to the bot, providing it's within the scope of the project.
-Start an issue, submit a PR and I'll get to it when I can :)
-
-Here's a high level guide on how to spin up a development version of the bot:
-- `yarn`
-- **Follow the [.example.env](https://github.com/Codeize/SWAT/blob/main/.env.example) file and fill it out.**
-- `yarn build`
+If one of your interactions might take longer than three seconds to reply, you **must** use `interaction.deferReply(...)`, and then `interaction.editReply(...)`,
+otherwise the interaction's token will invalidate and you will not be able to reply.
 
 ## Credits
 
-[SwitchbladeBot](https://github.com/SwitchbladeBot) for allowing the use of their widget service.
+[Geek](https://github.com/GamingGeek) @ [FireDiscordBot](https://github.com/): The [widget](https://inv.wtf) below, as well as the discord.js [fork](https://github.com/FireDiscordBot/discord.js) that we use.
 
-[xPolar](https://github.com/xPolar) for providing the base of the bot.
+## Join The Following Server For Support
 
-[Geek](https://github.com/GamingGeek) for providing the [paste bin service](https://h.inv.wtf).
-
-## Support
-[![widget](https://invidget.switchblade.xyz/854739172580655134)](https://discord.gg/7syTGCkZs8)
+[![Discord Invite Widget](https://inv.wtf/widget/polar)](https://inv.wtf/polar)
