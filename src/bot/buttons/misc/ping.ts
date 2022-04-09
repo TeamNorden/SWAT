@@ -1,25 +1,20 @@
-import { ButtonInteraction, MessageButton } from "discord.js";
+import { ButtonInteraction, MessageActionRow, MessageButton } from "discord.js";
 import Button from "../../../../lib/classes/Button.js";
 import BetterClient from "../../../../lib/extensions/BetterClient.js";
 
-export default class Ping extends Button {
+export default class DisableButton extends Button {
     constructor(client: BetterClient) {
-        super("ping", client, {
+        super("disablebutton", client, {
             permissions: ["SEND_MESSAGES"],
             clientPermissions: ["SEND_MESSAGES"],
         });
     }
 
     override async run(button: ButtonInteraction) {
-        // how the fuck can i disable the motherfucking button?
-        const disabledComponents = button.message!.components
+        console.log(button.message?.components![0].components[0])
+        const thingy = await (button.message?.components![0].components.map(button => (button as MessageButton).setDisabled(true)))
+        const comp = new MessageActionRow().addComponents(thingy!)
+        return button.update({ content: "haha yes button go disabled!", components: [comp] });
 
-        disabledComponents![0].components[0].disabled = true
-
-        button.reply({ content: 'content', components: [disabledComponents!] })
-
-        // console.log(button.component?.disabled)
-        // console.log(button)
-        // console.log(button.component)c
     }
 }

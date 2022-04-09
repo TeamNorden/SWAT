@@ -18,7 +18,9 @@ export default class Ping extends SlashCommand {
             message.createdTimestamp - interaction.createdTimestamp;
         const apiLatency = Math.round(this.client.ws.ping);
         const button = new MessageActionRow().addComponents(
-            new MessageButton().setCustomId("ping").setLabel("Pong!").setStyle("SUCCESS").setEmoji("✅"),
+            new MessageButton().setCustomId("disablebutton").setLabel("Pong!").setStyle("SUCCESS").setEmoji("✅"),
+            new MessageButton().setCustomId("disablebuttoan").setLabel("2!").setStyle("SUCCESS").setEmoji("✅"),
+            new MessageButton().setCustomId("diasablebutton").setLabel("2332!").setStyle("SUCCESS").setEmoji("✅"),
         )
         return interaction.editReply({
             content: `Pong! Round trip took ${(
