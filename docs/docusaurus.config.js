@@ -84,7 +84,7 @@ const config = {
               },
               {
                 label: 'Development Server',
-                href: 'https://dsc.gg/nd',
+                href: 'https://dsc.gg/nordendev',
               },
             ],
           },
