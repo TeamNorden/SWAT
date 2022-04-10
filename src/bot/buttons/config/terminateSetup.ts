@@ -1,10 +1,11 @@
 import { ButtonInteraction, MessageActionRow, MessageButton } from "discord.js";
 import Button from "../../../../lib/classes/Button.js";
 import BetterClient from "../../../../lib/extensions/BetterClient.js";
+import { SetupTerminatedEmbed } from "../../utils/SetupCmdUtils.js";
 
-export default class DisableButton extends Button {
+export default class SetupActionTerminateSetup extends Button {
     constructor(client: BetterClient) {
-        super("disablebutton", client, {
+        super("SETUP_ACTION_TERMINATE_SETUP", client, {
             permissions: ["SEND_MESSAGES"],
             clientPermissions: ["SEND_MESSAGES"],
         });
@@ -12,12 +13,12 @@ export default class DisableButton extends Button {
 
     override async run(button: ButtonInteraction) {
 
-        // const thingy = await (button.message?.components![0].components.map(button => (button as MessageButton).setDisabled(true)))
         const data = button.message?.components![0].components.map(value => (value as MessageButton).setDisabled(true))
-
+        const data2 = button.message?.components![1].components.map(value => (value as MessageButton).setDisabled(true))
 
         const component = new MessageActionRow().addComponents(data!)
-        return button.update({ content: "haha yes button go disabled!", components: [component] });
+        const component2 = new MessageActionRow().addComponents(data2!)
+        return button.update({ embeds: [SetupTerminatedEmbed], components: [component, component2] });
 
     }
 }
