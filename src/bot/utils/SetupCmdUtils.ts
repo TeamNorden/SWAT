@@ -3,53 +3,55 @@ import { MessageActionRow, MessageButton, MessageEmbed } from "discord.js";
 export const SetupPrompts = new MessageActionRow()
     .addComponents(
         new MessageButton()
-            .setLabel("ModLogs Channel")
+            .setLabel("Logs")
             .setStyle("SECONDARY")
             .setEmoji("📋")
-            .setCustomId("setupModLogs"),
+            .setCustomId("SETUP_SUBPAGE_LOGS")
+            .setDisabled(true),
         new MessageButton()
-            .setLabel("Reports Channel")
+            .setLabel("Reports")
             .setStyle("SECONDARY")
             .setEmoji("📋")
-            .setCustomId("setupReports"),
+            .setCustomId("SETUP_SUBPAGE_REPORT"),
         new MessageButton()
-            .setLabel("Verification Channel")
+            .setLabel("Verification")
             .setStyle("SECONDARY")
             .setEmoji("🛂")
-            .setCustomId("setupVerificationChannel"),
+            .setCustomId("SETUP_SUBPAGE_VERIFICATION"),
         new MessageButton()
             .setLabel("Automod")
             .setStyle("SECONDARY")
             .setEmoji("🔨")
-            .setCustomId("SETUP_AUTOMOD"),
+            .setCustomId("SETUP_SUBPAGE_AUTOMOD")
+            .setDisabled(true),
     )
 
-export const SetupAutomodPrompts = new MessageActionRow()
+export const SetupReportPrompts = new MessageActionRow()
     .addComponents(
         new MessageButton()
-            .setLabel("Ghost Pings")
+            .setLabel("Setup Reports Channel")
             .setStyle("SECONDARY")
-            .setEmoji("👻")
-            .setCustomId("GHOST_PINGS"),
+            .setEmoji("📋")
+            .setCustomId("SETUP_REPORT_CHANNEL"),
         new MessageButton()
-            .setLabel("Enabled")
-            .setStyle("SUCCESS")
-            .setEmoji("✅")
-            .setCustomId("setupAutomodGhostPings"),
+            .setLabel("Report Ping Role")
+            .setStyle("SECONDARY")
+            .setEmoji("📋")
+            .setCustomId("SETUP_REPORT_ROLE"),
     )
 
-export const SetupAutomodPrompts2 = new MessageActionRow()
+export const SetupVerificationPrompts = new MessageActionRow()
     .addComponents(
         new MessageButton()
-            .setLabel("Ghost Pings")
+            .setLabel("Setup Reports Channel")
             .setStyle("SECONDARY")
-            .setEmoji("👻")
-            .setCustomId("noReply"),
+            .setEmoji("🛂")
+            .setCustomId("SETUP_VERIFICATION_CHANNEL"),
         new MessageButton()
-            .setLabel("Enabled")
-            .setStyle("SUCCESS")
-            .setEmoji("✅")
-            .setCustomId("setupAutomodGhostPings"),
+            .setLabel("Setup Verification Channel")
+            .setStyle("SECONDARY")
+            .setEmoji("🛂")
+            .setCustomId("SETUP_VERIFICATION_ROLE"),
     )
 
 export const SetupAdminActions = new MessageActionRow()
@@ -69,10 +71,19 @@ export const SetupAdminActions = new MessageActionRow()
             .setCustomId("SETUP_ACTION_TERMINATE_DATA")
     )
 
+export const SetupBackButton = new MessageActionRow()
+    .addComponents(
+        new MessageButton()
+            .setLabel("Back")
+            .setStyle("PRIMARY")
+            .setEmoji("⬅️")
+            .setCustomId("SETUP_ACTION_BACK")
+    )
+
 
 export const SetupEmbed = new MessageEmbed()
     .setTitle("Setup")
-    .setDescription("Welcome to the setup process. Please select an option below.")
+    .setDescription("Welcome to the setup process. Please select an option below.\n\n(If any button is disabled now, it means that the feature isn't yet released to public SWAT versions, stay tuned!)")
     .setColor("#0099ff")
 
 export const SetupTerminatedEmbed = new MessageEmbed()
@@ -85,6 +96,16 @@ export const SetupAutomodEmbed = new MessageEmbed()
     .setDescription("Please select an option below to begin configuring SWAT's automod module.")
     .setColor("#0099ff")
 
-export const SetupComponents = [SetupPrompts, SetupAdminActions]
+export const SetupReportEmbed = new MessageEmbed()
+    .setTitle("Setup Reports")
+    .setDescription("Please select an option below to begin configuring SWAT's reports module.")
+    .setColor("#0099ff")
 
-export const SetupAutomodComponents = [SetupAutomodPrompts, SetupAutomodPrompts2]
+export const SetupVerificationEmbed = new MessageEmbed()
+    .setTitle("Setup Verification")
+    .setDescription("Please select an option below to begin configuring SWAT's verification module.")
+    .setColor("#0099ff")
+
+export const SetupComponents = [SetupPrompts, SetupAdminActions]
+export const SetupReportComponents = [SetupReportPrompts, SetupBackButton]
+export const SetupVerificationComponents = [SetupVerificationPrompts, SetupBackButton]
