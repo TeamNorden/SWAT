@@ -71,7 +71,12 @@ export default class Button {
     public validate(
         interaction: ButtonInteraction
     ): MessageEmbedOptions | null {
-        if (this.guildOnly && !interaction.inGuild())
+        if (interaction.message!.interaction!.user.id !== interaction.user.id) {
+            return {
+                title: "Author Only",
+                description: "Only the author can use this button."
+            };
+        } else if (this.guildOnly && !interaction.inGuild())
             return {
                 title: "Missing Permissions",
                 description: "This button can only be used in guilds!"
