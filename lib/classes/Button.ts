@@ -37,6 +37,12 @@ export default class Button {
      */
     private readonly ownerOnly: boolean;
 
+
+    /**
+     * Whether this button can only be interacted with by the invoker of the original command.
+     */
+    private readonly invokerOnly: boolean;
+
     /**
      * Our client.
      */
@@ -59,6 +65,7 @@ export default class Button {
         this.devOnly = options.devOnly || false;
         this.guildOnly = options.guildOnly || false;
         this.ownerOnly = options.ownerOnly || false;
+        this.invokerOnly = options.invokerOnly || true;
 
         this.client = client;
     }
@@ -71,10 +78,10 @@ export default class Button {
     public validate(
         interaction: ButtonInteraction
     ): MessageEmbedOptions | null {
-        if (interaction.message!.interaction!.user.id !== interaction.user.id) {
+        if (this.invokerOnly && interaction.message!.interaction!.user.id !== interaction.user.id) {
             return {
-                title: "Author Only",
-                description: "Only the author can use this button."
+                title: "Invoker Only",
+                description: `This button can only be used by <@!${interaction.message!.interaction!.user.id}>! :rage:`
             };
         } else if (this.guildOnly && !interaction.inGuild())
             return {

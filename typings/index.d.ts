@@ -33,6 +33,7 @@ export interface ButtonOptions {
     devOnly?: boolean;
     guildOnly?: boolean;
     ownerOnly?: boolean;
+    invokerOnly?: boolean;
 }
 
 export interface GeneratedMessage {
