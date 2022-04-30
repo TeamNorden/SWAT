@@ -12,5 +12,4 @@ const client = new BetterClient({
 
 client.login().catch(error => {
     client.logger.error(error);
-    client.logger.sentry.captureException(error);
 });

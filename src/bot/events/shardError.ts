@@ -1,9 +1,8 @@
 import EventHandler from "../../../lib/classes/EventHandler.js";
 
 export default class ShardError extends EventHandler {
-    override async run(error: Error, shardId: number) {
+    override async run(error: Error) {
         this.client.logger.error(error);
-        this.client.logger.sentry.captureWithExtras(error, { Shard: shardId });
         const haste = this.client.functions.uploadHaste(
             `${error.name}: ${error.message}`
         );

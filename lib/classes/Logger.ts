@@ -9,21 +9,14 @@ import {
 } from "colorette";
 import { format } from "util";
 import { WebhookClient, WebhookMessageOptions } from "discord.js";
-import init from "../utilities/sentry.js";
 
 export class Logger {
-    /**
-     * Our Sentry logger.
-     */
-    public readonly sentry;
-
     /**
      * The list of webhooks our Logger can use.
      */
     private readonly webhooks: Record<string, WebhookClient>;
 
     constructor() {
-        this.sentry = init();
         this.webhooks = {};
     }
 

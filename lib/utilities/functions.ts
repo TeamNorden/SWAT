@@ -184,10 +184,6 @@ export default class Functions {
             }`;
         } catch (error) {
             this.client.logger.error(error);
-            this.client.logger.sentry.captureWithExtras(error, {
-                Hastebin: this.client.config.hastebin,
-                Content: content
-            });
             return null;
         }
     }
@@ -255,7 +251,6 @@ export default class Functions {
         } catch (error: any) {
             if (error.code === 50035) return undefined;
             this.client.logger.error(error);
-            this.client.logger.sentry.captureWithExtras(error, { input: user });
         }
         return undefined;
     }

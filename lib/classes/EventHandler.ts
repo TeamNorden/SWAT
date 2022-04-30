@@ -37,10 +37,6 @@ export default class EventHandler {
             return await this.run(...args);
         } catch (error) {
             this.client.logger.error(error);
-            this.client.logger.sentry.captureWithExtras(error, {
-                Event: this.name,
-                Arguments: args
-            });
         }
     }
 

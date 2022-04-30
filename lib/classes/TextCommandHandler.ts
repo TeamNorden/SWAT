@@ -155,16 +155,10 @@ export default class TextCommandHandler {
             })
             .catch(async (error): Promise<any> => {
                 this.client.logger.error(error);
-                const sentryId =
-                    await this.client.logger.sentry.captureWithMessage(
-                        error,
-                        message
-                    );
                 return message.reply(
                     this.client.functions.generateErrorMessage({
                         title: "An Error Has Occurred",
-                        description: `An unexpected error was encountered while running \`${command.name}\`, my developers have already been notified! Feel free to join my support server in the mean time!`,
-                        footer: { text: `Sentry Event ID: ${sentryId} ` }
+                        description: `An unexpected error was encountered while running \`${command.name}\`, my developers have already been notified! Feel free to join my support server in the mean time!`
                     })
                 );
             });

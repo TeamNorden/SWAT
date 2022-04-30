@@ -80,26 +80,6 @@ export default class SlashCommandHandler {
                                 );
                             else {
                                 this.client.logger.error(error);
-                                this.client.logger.sentry.captureWithExtras(
-                                    error,
-                                    {
-                                        Guild: guild.name,
-                                        "Guild ID": guild.id,
-                                        "Slash Command Count":
-                                            this.client.slashCommands.size,
-                                        "Slash Commands":
-                                            this.client.slashCommands.map(
-                                                command => {
-                                                    return {
-                                                        name: command.name,
-                                                        description:
-                                                            command.description,
-                                                        options: command.options
-                                                    };
-                                                }
-                                            )
-                                    }
-                                );
                             }
                         })
                     )
@@ -123,27 +103,6 @@ export default class SlashCommandHandler {
                                     );
                                 else {
                                     this.client.logger.error(error);
-                                    this.client.logger.sentry.captureWithExtras(
-                                        error,
-                                        {
-                                            Guild: guild.name,
-                                            "Guild ID": guild.id,
-                                            "Slash Command Count":
-                                                this.client.slashCommands.size,
-                                            "Slash Commands":
-                                                this.client.slashCommands.map(
-                                                    command => {
-                                                        return {
-                                                            name: command.name,
-                                                            description:
-                                                                command.description,
-                                                            options:
-                                                                command.options
-                                                        };
-                                                    }
-                                                )
-                                        }
-                                    );
                                 }
                             })
                     )
@@ -178,11 +137,6 @@ export default class SlashCommandHandler {
             this.client.logger.error(
                 `${interaction.user.tag} [${interaction.user.id}] invoked slash command ${interaction.commandName} even though it doesn't exist.`
             );
-            const sentryId =
-                await this.client.logger.sentry.captureWithInteraction(
-                    new Error(`Non existent slash command invoked`),
-                    interaction
-                );
             if (process.env.NODE_ENV === "production")
                 this.client.application?.commands.delete(
                     interaction.commandName
@@ -200,26 +154,6 @@ export default class SlashCommandHandler {
                                     );
                                 else {
                                     this.client.logger.error(error);
-                                    this.client.logger.sentry.captureWithExtras(
-                                        error,
-                                        {
-                                            Guild: guild.name,
-                                            "Guild ID": guild.id,
-                                            "Slash Command Count":
-                                                this.client.slashCommands.size,
-                                            "Slash Commands":
-                                                this.client.slashCommands.map(
-                                                    cmd => {
-                                                        return {
-                                                            name: cmd.name,
-                                                            description:
-                                                                cmd.description,
-                                                            options: cmd.options
-                                                        };
-                                                    }
-                                                )
-                                        }
-                                    );
                                 }
                             })
                     )
@@ -228,8 +162,7 @@ export default class SlashCommandHandler {
                 this.client.functions.generateErrorMessage(
                     {
                         title: "Non Existent Command",
-                        description: `The command \`${interaction.commandName}\` doesn't exist on this instance of ${this.client.user?.username}, this has already been reported to my developers and the command has been removed!`,
-                        footer: { text: `Sentry Event ID: ${sentryId} ` }
+                        description: `The command \`${interaction.commandName}\` doesn't exist on this instance of ${this.client.user?.username}, this has already been reported to my developers and the command has been removed!`
                     },
                     true
                 )
@@ -291,16 +224,10 @@ export default class SlashCommandHandler {
             })
             .catch(async (error): Promise<any> => {
                 this.client.logger.error(error);
-                const sentryId =
-                    await this.client.logger.sentry.captureWithInteraction(
-                        error,
-                        interaction
-                    );
                 const toSend = this.client.functions.generateErrorMessage(
                     {
                         title: "An Error Has Occurred",
-                        description: `An unexpected error was encountered while running \`${interaction.commandName}\`, my developers have already been notified! Feel free to join my support server in the mean time!`,
-                        footer: { text: `Sentry Event ID: ${sentryId} ` }
+                        description: `An unexpected error was encountered while running \`${interaction.commandName}\`, my developers have already been notified! Feel free to join my support server in the mean time!`
                     },
                     true
                 );

@@ -140,16 +140,10 @@ export default class DropdownHandler {
             })
             .catch(async (error): Promise<any> => {
                 this.client.logger.error(error);
-                const sentryId =
-                    await this.client.logger.sentry.captureWithInteraction(
-                        error,
-                        interaction
-                    );
                 const toSend = this.client.functions.generateErrorMessage(
                     {
                         title: "An Error Has Occurred",
-                        description: `An unexpected error was encountered while running this drop down, my developers have already been notified! Feel free to join my support server in the mean time!`,
-                        footer: { text: `Sentry Event ID: ${sentryId} ` }
+                        description: `An unexpected error was encountered while running this drop down, my developers have already been notified! Feel free to join my support server in the mean time!`
                     },
                     true
                 );

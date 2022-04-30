@@ -101,10 +101,6 @@ export default class AutoCompleteHandler {
             )
             .catch(async (error): Promise<any> => {
                 this.client.logger.error(error);
-                await this.client.logger.sentry.captureWithInteraction(
-                    error,
-                    interaction
-                );
 
                 if (!interaction.responded) return interaction.respond([]);
             });
