@@ -1,6 +1,6 @@
 /* eslint-disable import/order */
 import ContextMenu from "./ContextMenu.js";
-import { ContextMenuInteraction } from "discord.js";
+import { UserContextMenuInteraction } from "discord.js";
 import BetterClient from "../extensions/BetterClient.js";
 
 export default class ContextMenuHandler {
@@ -35,16 +35,16 @@ export default class ContextMenuHandler {
      */
     public loadCtx() {
         this.client.functions
-            .getFiles(`${this.client.__dirname}/dist/src/bot/ctxMenus`, "", true)
+            .getFiles(`${this.client.__dirname}/dist/src/bot/ctxMenu`, "", true)
             .forEach(parentFolder =>
                 this.client.functions
                     .getFiles(
-                        `${this.client.__dirname}/dist/src/bot/ctxMenus/${parentFolder}`,
+                        `${this.client.__dirname}/dist/src/bot/ctxMenu/${parentFolder}`,
                         ".js"
                     )
                     .forEach(async fileName => {
                         const ctxMenuFile = await import(
-                            `../../src/bot/ctxMenus/${parentFolder}/${fileName}`
+                            `../../src/bot/ctxMenu/${parentFolder}/${fileName}`
                         );
                         // eslint-disable-next-line new-cap
                         const ctxMenu: ContextMenu = new ctxMenuFile.default(
@@ -53,6 +53,46 @@ export default class ContextMenuHandler {
                         return this.client.ctxMenus.set(ctxMenu.name, ctxMenu);
                     })
             );
+        return setTimeout(async () => {
+            if (process.env.NODE_ENV === "production") {                
+                await Promise.all(
+                    this.client.guilds.cache.map(guild =>
+                        guild.commands.set([]).catch(error => {
+                            if (error.code === 50001)
+                                this.client.logger.error(
+                                    null,
+                                    `I encountered DiscordAPIError: Missing Access in ${guild.name} [${guild.id}] when trying to set ctx menus!`
+                                );
+                            else {
+                                this.client.logger.error(error);
+                            }
+                        })
+                    )
+                );
+            } else
+                await Promise.all(
+                    this.client.guilds.cache.map(async guild =>
+                        guild.commands
+                            .set(
+                                this.client.ctxMenus.map(ctxMenus => ({
+                                    name: ctxMenus.name,
+                                    description: ctxMenus.description, 
+                                    options: ctxMenus.options
+                                }))
+                            )
+                            .catch(error => {
+                                if (error.code === 50001)
+                                    this.client.logger.error(
+                                        null,
+                                        `I encountered DiscordAPIError: Missing Access in ${guild.name} [${guild.id}] when trying to set ctx menus!`
+                                    );
+                                else {
+                                    this.client.logger.error(error);
+                                }
+                            })
+                    )
+                );
+        }, 5000);
     }
 
     /**
@@ -78,7 +118,7 @@ export default class ContextMenuHandler {
      * Handle the interaction created for this ContextMenu to make sure the user and client can execute it.
      * @param interaction The interaction created.
      */
-    public async handleContextMenu(interaction: ContextMenuInteraction) {
+    public async handleContextMenu(interaction: UserContextMenuInteraction) {
         const ctxMenu = this.fetchContextMenu(interaction.commandId);
         if (
             !ctxMenu ||
@@ -110,7 +150,7 @@ export default class ContextMenuHandler {
      * @param ctxMenu The ContextMenu we want to execute.
      * @param interaction The interaction for our ContextMenu.
      */
-    private async runContextMenu(ctxMenu: ContextMenu, interaction: ContextMenuInteraction) {
+    private async runContextMenu(ctxMenu: ContextMenu, interaction: UserContextMenuInteraction) {
         if (this.coolDowns.has(interaction.user.id))
             return interaction.reply(
                 this.client.functions.generateErrorMessage({

@@ -37,8 +37,10 @@ export interface ButtonOptions {
 }
 
 export interface CtxMenuOptions {
-    permissions: PermissionString[]; 
-    clientPermissions: PermissionString[];
+    description?: string;
+    permissions?: PermissionString[]; 
+    options?: ApplicationCommandOptionData[];
+    clientPermissions?: PermissionString[];
     devOnly?: boolean; 
     guildOnly?: boolean; 
     ownerOnly?: boolean; 

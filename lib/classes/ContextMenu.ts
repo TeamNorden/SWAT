@@ -1,27 +1,31 @@
-import { ContextMenuInteraction, MessageEmbedOptions, PermissionString } from "discord.js";
+import { UserContextMenuInteraction, MessageEmbedOptions, PermissionString, ApplicationCommandOptionData, ContextMenuInteraction } from "discord.js";
 import { CtxMenuOptions } from "../../typings";
 import BetterClient from "../extensions/BetterClient";
 
 /**
  * @class ContextMenu
- * @description Represents a ContextMenuInteraction 
- * @link https://discord.js.org/#/docs/main/stable/class/ContextMenuInteraction
+ * @description Represents a UserContextMenuInteraction 
+ * @link https://discord.js.org/#/docs/main/stable/class/UserContextMenuInteraction
 */
 
 export default class ContextMenu {
     public readonly name: string;
+    
+    public readonly description: string;
+
+    public readonly options: ApplicationCommandOptionData[];
 
     private readonly permissions: PermissionString[];
 
     private readonly clientPermissions: PermissionString[];
 
-    /** @property Whether the command can only be ran by the bot developer. */
+    /** Whether the command can only be ran by the bot developer. */
     private readonly devOnly: boolean;
     
-    /** @property Whether the command can only be ran in a guild. */
+    /** Whether the command can only be ran in a guild. */
     private readonly guildOnly: boolean;
 
-    /** @property Whether the command can only be ran by the guild owner. */
+    /** Whether the command can only be ran by the guild owner. */
     private readonly ownerOnly: boolean; 
 
 
@@ -30,6 +34,8 @@ export default class ContextMenu {
 
     constructor(name: string, client: BetterClient, options: CtxMenuOptions) {
         this.name = name; 
+        this.description = options.description || "";
+        this.options = options.options || [];
         this.permissions = options.permissions || [];
         this.clientPermissions = client.config.requiredPermissions.concat(
             options.clientPermissions || []
@@ -46,7 +52,7 @@ export default class ContextMenu {
          * @returns The error or null if the command is valid.
          */
     public validate(
-        interaction: ContextMenuInteraction
+        interaction: UserContextMenuInteraction
     ): MessageEmbedOptions | null {
         if (this.guildOnly && !interaction.inGuild())
             return {
@@ -123,5 +129,5 @@ export default class ContextMenu {
      * Run this ctx menu.
      * @param _interaction The interaction that was created.
      */
-      public async run(_interaction: ContextMenuInteraction): Promise<any> {}
+      public async run(_interaction: UserContextMenuInteraction): Promise<any> {}
 }
