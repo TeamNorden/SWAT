@@ -125,9 +125,6 @@ export default class ButtonHandler {
             .run(interaction)
             .then(() => {
                 this.client.usersUsingBot.delete(interaction.user.id);
-                this.client.dataDog.increment("buttonUsage", 1, [
-                    `button:${button.name}`
-                ]);
             })
             .catch(async (error): Promise<any> => {
                 this.client.logger.error(error);

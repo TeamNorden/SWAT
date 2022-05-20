@@ -149,9 +149,6 @@ export default class TextCommandHandler {
             .run(message, args)
             .then(() => {
                 this.client.usersUsingBot.delete(message.author.id);
-                this.client.dataDog.increment("textCommandUsage", 1, [
-                    `command:${command.name}`
-                ]);
             })
             .catch(async (error): Promise<any> => {
                 this.client.logger.error(error);

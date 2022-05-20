@@ -1,6 +1,5 @@
 import { resolve } from "path";
 import { MongoClient } from "mongodb";
-import * as metrics from "datadog-metrics";
 import { Client, ClientOptions, Collection } from "discord.js";
 import Button from "../classes/Button.js";
 import DropDown from "../classes/DropDown.js";
@@ -100,11 +99,6 @@ export default class BetterClient extends Client {
     public readonly mongo: MongoClient;
 
     /**
-     * Our data dog client.
-     */
-    public readonly dataDog: typeof metrics;
-
-    /**
      * The current version of our client.
      */
     public readonly version: string;
@@ -181,30 +175,6 @@ export default class BetterClient extends Client {
         this.textCommandHandler.loadTextCommands();
         this.autoCompleteHandler.loadAutoCompletes();
         this.loadEvents();
-
-        // @ts-ignore
-        this.dataDog = metrics.default;
-        if (this.config.dataDog.apiKey?.length) {
-            this.dataDog.init({
-                flushIntervalSeconds: 0,
-                apiKey: this.config.dataDog.apiKey,
-                prefix: `${this.config.botName}.`,
-                defaultTags: [`env:${process.env.NODE_ENV}`]
-            });
-            this.logger.info("DataDog initialized.");
-            setInterval(() => {
-                this.dataDog.gauge("guilds", this.cachedStats.guilds);
-                this.dataDog.gauge("users", this.cachedStats.users);
-                if (this.isReady())
-                    this.dataDog.flush(
-                        () =>
-                            this.logger.info(`Flushed information to DataDog.`),
-                        error => {
-                            this.logger.error(error);
-                        }
-                    );
-            }, 60000);
-        }
     }
 
     /**

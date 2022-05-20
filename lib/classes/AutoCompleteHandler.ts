@@ -94,11 +94,6 @@ export default class AutoCompleteHandler {
     ) {
         autoComplete
             .run(interaction)
-            .then(() =>
-                this.client.dataDog.increment("autocompleteUsage", 1, [
-                    `completion:${autoComplete.name}`
-                ])
-            )
             .catch(async (error): Promise<any> => {
                 this.client.logger.error(error);
                 if (!interaction.responded) return interaction.respond([]);

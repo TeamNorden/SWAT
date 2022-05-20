@@ -134,9 +134,6 @@ export default class DropdownHandler {
             .run(interaction)
             .then(() => {
                 this.client.usersUsingBot.delete(interaction.user.id);
-                this.client.dataDog.increment("dropdownUsage", 1, [
-                    `dropdown:${dropdown.name}`
-                ]);
             })
             .catch(async (error): Promise<any> => {
                 this.client.logger.error(error);

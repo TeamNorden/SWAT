@@ -218,9 +218,6 @@ export default class SlashCommandHandler {
                 if (command.cooldown)
                     await command.applyCooldown(interaction.user.id);
                 this.client.usersUsingBot.delete(interaction.user.id);
-                this.client.dataDog.increment("slashCommandUsage", 1, [
-                    `command:${command.name}`
-                ]);
             })
             .catch(async (error): Promise<any> => {
                 this.client.logger.error(error);

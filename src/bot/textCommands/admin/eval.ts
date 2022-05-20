@@ -95,10 +95,6 @@ export default class Eval extends TextCommand {
                     this.client.mongo.options.srvHost || "",
                     "[ M O N G O H O S T ]"
                 )
-                .replace(
-                    this.client.config.dataDog.apiKey || "",
-                    "[ D A T A D O G A P I K E Y ]"
-                )
         );
     }
 }

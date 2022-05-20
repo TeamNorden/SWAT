@@ -91,10 +91,5 @@ export default {
 	emojis: {
 		checkMark: ":white_check_mark:",
 		xMark: ":x:"
-	},
-
-	dataDog: {
-        apiKey: process.env.DATADOG_API_KEY,
-        baseURL: "https://app.datadoghq.com/api/v1/"
-    }
+	}
 };

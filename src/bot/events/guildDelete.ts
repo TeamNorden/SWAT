@@ -4,8 +4,6 @@ import EventHandler from "../../../lib/classes/EventHandler.js";
 export default class GuildDelete extends EventHandler {
     override async run(guild: Guild) {
         const stats = await this.client.fetchStats();
-        this.client.dataDog.gauge("guilds", stats.guilds);
-        this.client.dataDog.gauge("users", stats.users);
         this.client.logger.info(
             `Left guild ${guild.name} (${guild.id}) with ${guild.memberCount} members, now in ${stats.guilds} guilds(s)!`
         );
