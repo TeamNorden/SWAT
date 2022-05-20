@@ -8,7 +8,7 @@ jobs:
     steps:
     - uses: konradpabjan/move-labeled-or-milestoned-issue@v2.0
       with:
-        action-token: "${{ secrets.TEAMNORDEN_ADMIN }}"
+        action-token: ${{ secrets.TEAMNORDEN_ADMIN }}
         project-url: "https://github.com/TeamNorden/SWAT/projects/1"
         column-name: "On Deck"
         label-name: "priority"
