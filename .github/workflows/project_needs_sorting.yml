@@ -1,6 +1,6 @@
 on:
   issues:
-    types: [labeled]
+    types: [opened]
 jobs:
   Move_Labeled_Issue_On_Project_Board:
     runs-on: ubuntu-latest
@@ -9,6 +9,5 @@ jobs:
       with:
         action-token: "${{ secrets.ADMIN_ACCESS }}"
         project-url: "https://github.com/TeamNorden/SWAT/projects/1"
-        column-name: "Needs Investigation"
-        label-name: "needs triage"
+        column-name: "On Deck"
         columns-to-ignore: "High Priority,Done,Back-Burner"
