@@ -10,6 +10,7 @@
     },
     "dependencies": {
         "@lukeed/ms": "^2.0.0",
+        "babel": "^6.23.0",
         "colorette": "^2.0.16",
         "discord.js": "github:FireDiscordBot/discord.js",
         "dotenv-extended": "^2.9.0",
