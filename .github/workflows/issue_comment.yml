@@ -1,0 +1,15 @@
+name: issue-comment
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  comment:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: ben-z/actions-comment-on-issue@1.0.2
+      with:
+        message: "Hi there contributor! :wave:\nRight now your issue **__needs sorting__**, but rest assured, our team will do this so you don't have to!\n\n:+1: **Thanks for taking the time to file an issue, we'll be right on it! :sunglasses:**"
+        GITHUB_TOKEN: ${{ secrets.ADMIN_ACCESS }}

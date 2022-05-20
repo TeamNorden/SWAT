@@ -9,6 +9,6 @@ jobs:
       with:
         action-token: "${{ secrets.ADMIN_ACCESS }}"
         project-url: "https://github.com/TeamNorden/SWAT/projects/1"
-        column-name: "On Deck"
-        label-name: "priority"
+        column-name: "Needs Investigation"
+        label-name: "needs triage"
         columns-to-ignore: "In Review,Ready to deploy,Done"
