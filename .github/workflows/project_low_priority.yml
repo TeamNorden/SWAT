@@ -1,13 +1,14 @@
 on:
   issues:
-    types: [opened]
+    types: [labeled]
 jobs:
-  createCard:
+  Move_Labeled_Issue_On_Project_Board:
     runs-on: ubuntu-latest
     steps:
-      - name: Create or Update Project Card
-        uses: peter-evans/create-or-update-project-card@v2
-        with:
-          token: ${{ secrets.TEAMNORDEN_ADMIN }}
-          project-name: SWAT Roadmap
-          column-name: To Do
+    - uses: konradpabjan/move-labeled-or-milestoned-issue@v2.0
+      with:
+        action-token: "${{ secrets.ADMIN_ACCESS }}"
+        project-url: "https://github.com/TeamNorden/SWAT/projects/1"
+        column-name: "On Deck"
+        label-name: "priority"
+        columns-to-ignore: "In Review,Ready to deploy,Done"
