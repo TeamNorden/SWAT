@@ -10,5 +10,6 @@ jobs:
       with:
         action-token: "${{ secrets.TEAMNORDENADMIN }}"
         project-url: "https://github.com/TeamNorden/SWAT/projects/1"
-        column-name: "Low Priority / Back-Burner"
-        label-name: "low priority"' '
+        column-name: "On Deck"
+        label-name: "priority"
+        columns-to-ignore: "In Review,Ready to deploy,Done"
