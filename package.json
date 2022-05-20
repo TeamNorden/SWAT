@@ -1,46 +1,36 @@
 {
-	"name": "swat",
-	"version": "0 Dev",
-	"description": "Discord moderation and automoderation bot.",
-	"main": "dist/src/index.js",
-	"type": "commonjs",
-	"scripts": {
-		"build": "tsc && node .",
-		"start": "node .",
-		"test": "ts-node ./src/index.ts"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/Codeize/SWAT.git"
-	},
-	"keywords": [],
-	"author": "",
-	"license": "ISC",
-	"bugs": {
-		"url": "https://github.com/Codeize/SWAT/issues"
-	},
-	"homepage": "https://github.com/Codeize/SWAT#readme",
-	"dependencies": {
-		"@discordjs/rest": "^0.2.0-canary.0",
-		"@sentry/node": "^6.15.0",
-		"@sentry/tracing": "^6.15.0",
-		"@typegoose/typegoose": "^9.3.1",
-		"@types/ms": "^0.7.31",
-		"colorette": "^2.0.16",
-		"discord-api-types": "^0.25.2",
-		"discord.js": "^13.4.0",
-		"dotenv-extended": "^2.9.0",
-		"global": "^4.4.0",
-		"hastebin": "^0.2.1",
-		"mongoose": "^6.1.1",
-		"ms": "^2.1.3",
-		"petitio": "^1.4.0",
-		"regexp-worker": "^1.1.1",
-		"ts-node": "^10.4.0"
-	},
-	"devDependencies": {
-		"@sentry/types": "^6.15.0",
-		"@types/node": "^16.11.9",
-		"typescript": "^4.5.2"
-	}
+    "name": "",
+    "version": "1.0.0",
+    "description": "",
+    "main": "dist/src/index.js",
+    "type": "module",
+    "scripts": {
+        "build": "tsc && cross-env NODE_ENV=development node .",
+        "start": "cross-env NODE_ENV=production node ."
+    },
+    "dependencies": {
+        "@lukeed/ms": "^2.0.0",
+        "babel": "^6.23.0",
+        "colorette": "^2.0.16",
+        "discord.js": "github:FireDiscordBot/discord.js",
+        "dotenv-extended": "^2.9.0",
+        "mongodb": "^4.2.0",
+        "petitio": "^1.4.0"
+    },
+    "devDependencies": {
+        "@types/got": "^9.6.12",
+        "@types/node": "^16.11.9",
+        "@typescript-eslint/eslint-plugin": "^5.8.0",
+        "@typescript-eslint/parser": "^5.8.0",
+        "cross-env": "^7.0.3",
+        "discord-api-types": "^0.28.0",
+        "eslint": "^8.5.0",
+        "eslint-config-airbnb-base": "^15.0.0",
+        "eslint-config-airbnb-typescript": "^16.1.0",
+        "eslint-config-prettier": "^8.3.0",
+        "eslint-plugin-import": "^2.25.3",
+        "eslint-plugin-prettier": "^4.0.0",
+        "prettier": "^2.5.1",
+        "typescript": "^4.5.2"
+    }
 }

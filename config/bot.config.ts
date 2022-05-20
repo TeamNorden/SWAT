@@ -1,6 +1,9 @@
-import { Intents, PermissionString } from "discord.js";
+import { Intents, PermissionString, PresenceData } from "discord.js";
 
 export default {
+	// Prefix Info
+	prefixes: process.env.NODE_ENV === "production" ? ["!"] : ["!!"],
+
 	// Bot Staff
 	developers: ["668423998777982997", "804970459561066537"],
 	admins: ["668423998777982997", "804970459561066537", "391936025598885891", "188988455554908160", "734784924619505774", "331080288283394051", "640922680173920258"],
@@ -17,6 +20,7 @@ export default {
 	website: "https://norden.wtf/",
 	panel: "https://panel.norden.wtf/",
 	votePortal: "https://vote.norden.wtf/",
+	postInvite: "https://thanks.norden.wtf/",
 
 	// Development Centric Info
 	development: {
@@ -31,8 +35,18 @@ export default {
 		votes: "850054869980413988",
 	},
 
+	presence: {
+        status: "online",
+        activities: [
+            {
+                type: "PLAYING",
+                name: "with some bitches"
+            }
+        ]
+    } as PresenceData,
 
 	// Bot Meta Info
+	botName: "SWAT",
 	version: "0 Dev",
 	github: "https://github.com/TeamNorden/SWAT/",
 	supportServer: "https://discord.gg/7syTGCkZs8/",
@@ -43,7 +57,7 @@ export default {
 		"https://discord.com/api/oauth2/authorize?client_id=914290270508572692&permissions=292556957910&scope=applications.commands%20bot/",
 	recommendedInvite:
 		"https://discord.com/api/oauth2/authorize?client_id=914290270508572692&permissions=8&scope=applications.commands%20bot/",
-	hastebin: "https://h.inv.wtf/",
+	hastebin: "https://h.inv.wtf",
 
 	// Colours
 	colors: {
