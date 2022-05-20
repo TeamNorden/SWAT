@@ -17,8 +17,6 @@ import TextCommandHandler from "../classes/TextCommandHandler.js";
 import SlashCommandHandler from "../classes/SlashCommandHandler.js";
 import AutoCompleteHandler from "../classes/AutoCompleteHandler.js";
 import AutoComplete from "../classes/AutoComplete.js";
-import ContextMenu from "../classes/ContextMenu.js";
-import ContextMenuHandler from "../classes/ContextMenuHandler.js";
 
 export default class BetterClient extends Client {
     /**
@@ -80,13 +78,6 @@ export default class BetterClient extends Client {
      * The dropDowns for our client.
      */
     public dropDowns: Collection<string, DropDown>;
-
-    public readonly ctxMenuHandler: ContextMenuHandler;
-
-    /**
-     * the contextMenus for our client
-     */
-    public ctxMenus: Collection<string, ContextMenu>
 
     /**
      * The autoCompleteHandler for our client.
@@ -158,9 +149,6 @@ export default class BetterClient extends Client {
 
         this.dropDownHandler = new DropDownHandler(this);
         this.dropDowns = new Collection();
-
-        this.ctxMenuHandler = new ContextMenuHandler(this);
-        this.ctxMenus = new Collection();
 
         this.autoCompleteHandler = new AutoCompleteHandler(this);
         this.autoCompletes = new Collection();

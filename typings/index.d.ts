@@ -36,15 +36,6 @@ export interface ButtonOptions {
     invokerOnly?: boolean;
 }
 
-export interface CtxMenuOptions {
-    description?: string;
-    permissions?: PermissionString[]; 
-    options?: ApplicationCommandOptionData[];
-    clientPermissions?: PermissionString[];
-    devOnly?: boolean; 
-    guildOnly?: boolean; 
-    ownerOnly?: boolean; 
-}
 export interface GeneratedMessage {
     embeds: MessageEmbed[];
     components: MessageActionRow[];
