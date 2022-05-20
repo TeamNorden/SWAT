@@ -20,6 +20,7 @@ jobs:
       if: github.event.action == 'opened'
       with:
         project: 'https://github.com/TeamNorden/SWAT/projects/1'
+        column_name: 'To Do'
 
     - name: Assign issues and pull requests with `bug` label to project 3
       uses: srggrs/assign-one-project-github-action@1.2.1
