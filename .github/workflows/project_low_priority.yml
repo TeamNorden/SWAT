@@ -1,15 +1,22 @@
-name: Move ON HOLD issue/PR to low priority column.
+name: Auto Assign to Project(s)
+
 on:
   issues:
-    types: [labeled]
+    types: [opened, labeled]
+  pull_request:
+    types: [opened, labeled]
+  issue_comment:
+    types: [created]
+env:
+  GITHUB_TOKEN: ${{ secrets.TEAMNORDEN_ADMIN }}
+
 jobs:
-  Move_Labeled_Issue_On_Project_Board:
+  assign_one_project:
     runs-on: ubuntu-latest
+    name: Assign to One Project
     steps:
-    - uses: konradpabjan/move-labeled-or-milestoned-issue@v2.0
+    - name: Assign NEW issues and NEW pull requests to project 1
+      uses: srggrs/assign-one-project-github-action@1.2.1
+      if: github.event.action == 'opened'
       with:
-        action-token: ${{ secrets.TEAMNORDEN_ADMIN }}
-        project-url: "https://github.com/TeamNorden/SWAT/projects/1"
-        column-name: "On Deck"
-        label-name: "priority"
-        columns-to-ignore: "In Review,Ready to deploy,Done"
+        project: 'https://github.com/TeamNorden/SWAT/projects/1'
